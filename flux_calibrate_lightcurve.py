@@ -185,9 +185,9 @@ target_lightcurves['r'] = (target_countcurves['r'] / comparison_countcurves['r']
 
 fig, axs = plt.subplots(3)
 
-axs[0].errorbar(target_lightcurves['u'].t, target_lightcurves['u'].y, yerr=target_lightcurves['u'].ye, color='blue', drawstyle='step')
-axs[1].errorbar(target_lightcurves['g'].t, target_lightcurves['g'].y, yerr=target_lightcurves['g'].ye, color='green', drawstyle='step')
-axs[2].errorbar(target_lightcurves['r'].t, target_lightcurves['r'].y, yerr=target_lightcurves['r'].ye, color='red', drawstyle='step')
+axs[0].errorbar(target_lightcurves['u'].t, target_lightcurves['u'].y, yerr=target_lightcurves['u'].ye, color='blue', drawstyle='steps')
+axs[1].errorbar(target_lightcurves['g'].t, target_lightcurves['g'].y, yerr=target_lightcurves['g'].ye, color='green', drawstyle='steps')
+axs[2].errorbar(target_lightcurves['r'].t, target_lightcurves['r'].y, yerr=target_lightcurves['r'].ye, color='red', drawstyle='steps')
 
 axs[2].set_ylabel("Time, MJD")
 axs[1].set_ylabel("SDSS Flux, mJy")
