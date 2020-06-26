@@ -76,7 +76,7 @@ comparison_lightcurves = {
 }
 
 # Lets calcualate the instrumental magnitudes here. This subtracts the atmosphere as well.
-target_instmags = get_instrumental_mags(data, coords, obsname, k_ext)
+target_instmags = get_instrumental_mags(data, target_coords, obsname, k_ext)
 # massage the above into the correct form for this script
 target_instmags = {
     'r': target_instmags['1'][0],
