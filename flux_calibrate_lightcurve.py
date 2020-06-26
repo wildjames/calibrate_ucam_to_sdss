@@ -152,6 +152,12 @@ while (du + dg + dr) > 0.001:
 print("\n\n\nConverged on the following target SDSS magnitudes:")
 print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**target_sdssmags))
 
+colour_terms = {}
+colour_terms['u'] = a_u*(comp_mags['u'] - comp_mags['g'])
+colour_terms['g'] = a_g*(comp_mags['g'] - comp_mags['r'])
+colour_terms['r'] = a_r*(comp_mags['g'] - comp_mags['r'])
+print("The colour correction applied to this star is:")
+print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**colour_terms))
 
 
 # target_u_countflux = target_countcurves['u'] / exptimes['u']
