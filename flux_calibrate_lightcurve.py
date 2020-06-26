@@ -75,14 +75,14 @@ sleep(3)
 
 # Extract the raw count data from the CCD reduction
 target_countcurves = {
-    'r': data.tseries('1', '1'),
-    'g': data.tseries('2', '1'),
-    'u': data.tseries('3', '1'),
+    'r': data.tseries('1', '1') / exptimes['r'],
+    'g': data.tseries('2', '1') / exptimes['g'],
+    'u': data.tseries('3', '1') / exptimes['u'],
 }
-comparison_lightcurves = {
-    'r': data.tseries('1', '2'),
-    'g': data.tseries('2', '2'),
-    'u': data.tseries('3', '2'),
+comparison_countcurves = {
+    'r': data.tseries('1', '2') / exptimes['r'],
+    'g': data.tseries('2', '2') / exptimes['g'],
+    'u': data.tseries('3', '2') / exptimes['u'],
 }
 
 # Lets calcualate the instrumental magnitudes here. This subtracts the atmosphere as well.
@@ -157,10 +157,10 @@ colour_terms = {}
 colour_terms['u'] = a_u*(comp_mags['u'] - comp_mags['g'])
 colour_terms['g'] = a_g*(comp_mags['g'] - comp_mags['r'])
 colour_terms['r'] = a_r*(comp_mags['g'] - comp_mags['r'])
-print("The colour correction applied to this star is:")
+print("The colour corrections applied to this star are:")
 print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**colour_terms))
 
-
+# What do these correspond to?
 k_u = 0.4 * a_u * (target_sdssmags['u'] - target_sdssmags['g'] - comp_mags['u'] + comp_mags['g'])
 k_g = 0.4 * a_g * (target_sdssmags['g'] - target_sdssmags['r'] - comp_mags['g'] + comp_mags['r'])
 k_r = 0.4 * a_r * (target_sdssmags['g'] - target_sdssmags['r'] - comp_mags['g'] + comp_mags['r'])
@@ -173,8 +173,19 @@ print("The following are the K factors in the equation: F_targ = K * F_comp * C_
 print("k_r: {:.3f}\nk_g: {:.3f}\nk_u: {:.3f}\n".format(k_r, k_g, k_u))
 
 
-# target_u_countflux = target_countcurves['u'] / exptimes['u']
-# target_g_countflux = target_countcurves['g'] / exptimes['g']
-# target_r_countflux = target_countcurves['r'] / exptimes['r']
+target_lightcurves = {}
 
+target_lightcurves['u'] = k_u * comp_flx['u'] * (target_countcurves['u'] / comparison_countcurves['u'])
+target_lightcurves['g'] = k_g * comp_flx['g'] * (target_countcurves['g'] / comparison_countcurves['g'])
+target_lightcurves['r'] = k_r * comp_flx['r'] * (target_countcurves['r'] / comparison_countcurves['r'])
 
+fig, axs = plt.subplots(3)
+
+axs[0].step(target_lightcurves['u'].t, target_lightcurves['u'].y, color='blue')
+axs[1].step(target_lightcurves['g'].t, target_lightcurves['g'].y, color='green')
+axs[2].step(target_lightcurves['r'].t, target_lightcurves['r'].y, color='red')
+
+axs[2].set_ylabel("Time, MJD")
+axs[1].set_ylabel("SDSS Flux, mJy")
+
+plt.show()
