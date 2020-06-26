@@ -132,9 +132,9 @@ iteration = 0
 while (du + dg + dr) > 0.001:
     iteration += 1
 
-    u_sdss_new = target_instmags['u'] + zp_u + a_u*(comp_mags['u'] - comp_mags['g'])
-    g_sdss_new = target_instmags['g'] + zp_g + a_g*(comp_mags['g'] - comp_mags['r'])
-    r_sdss_new = target_instmags['r'] + zp_r + a_r*(comp_mags['g'] - comp_mags['r'])
+    u_sdss_new = target_instmags['u'] + a_u*(comp_mags['u'] - comp_mags['g'])
+    g_sdss_new = target_instmags['g'] + a_g*(comp_mags['g'] - comp_mags['r'])
+    r_sdss_new = target_instmags['r'] + a_r*(comp_mags['g'] - comp_mags['r'])
 
     du = abs(target_sdssmags['u'] - u_sdss_new)
     dg = abs(target_sdssmags['g'] - g_sdss_new)
