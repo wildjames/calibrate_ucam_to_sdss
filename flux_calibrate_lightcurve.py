@@ -33,11 +33,7 @@ comp_mags = {
 }
 
 # Atmospheric extinction coefficients. Calculated empirically for UCAM, NTT, super filters.
-k_ext = {
-    'u': 0.4868,
-    'g': 0.2020,
-    'r': 0.1129,
-}
+k_ext = [0.1129, 0.2020, 0.4868]
 # Observatory name
 obsname = 'lasilla'
 
