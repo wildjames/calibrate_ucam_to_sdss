@@ -147,7 +147,7 @@ while (du + dg + dr) > 0.001:
     print("Iteration {:>03d} | du: {:>06.3f} | dg: {:>06.3f} | dr: {:>06.3f} |".format(iteration, du, dg, dr), end='\r')
 
 print("Converged on the following target SDSS magnitudes:")
-print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**target_sdss_mags))
+print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**target_sdssmags))
 
 
 
