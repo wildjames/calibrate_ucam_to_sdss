@@ -183,7 +183,7 @@ target_lightcurves['u'] = (target_countcurves['u'] / comparison_countcurves['u']
 target_lightcurves['g'] = (target_countcurves['g'] / comparison_countcurves['g']) * (k_g * comp_flx['g'])
 target_lightcurves['r'] = (target_countcurves['r'] / comparison_countcurves['r']) * (k_r * comp_flx['r'])
 
-fig, axs = plt.subplots(3)
+fig, axs = plt.subplots(3, sharex=True)
 
 axs[0].errorbar(target_lightcurves['u'].t, target_lightcurves['u'].y, yerr=target_lightcurves['u'].ye, color='blue', drawstyle='steps')
 axs[1].errorbar(target_lightcurves['g'].t, target_lightcurves['g'].y, yerr=target_lightcurves['g'].ye, color='green', drawstyle='steps')
