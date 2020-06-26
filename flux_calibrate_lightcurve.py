@@ -67,7 +67,9 @@ comparison_lightcurves = {
 
 print(dir(target_countcurves['u'].to_mag()))
 target_instmags = {
-    'u': target_countcurves['u'].to_mag()
+    key: target_countcurves[key].to_mag() for key in target_countcurves.keys()
 }
-
+target_sdssmags = {
+    key: val for key, val in target_instmags.iter()
+}
 
