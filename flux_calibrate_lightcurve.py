@@ -75,12 +75,27 @@ comparison_lightcurves = {
     'u': data.tseries('3', '2'),
 }
 
-# Lets calcualate the instrumental magnitudes here.
+# Lets calcualate the instrumental magnitudes here. This subtracts the atmosphere as well.
 target_instmags = get_instrumental_mags(data, coords, obsname, k_ext)
-# The above are under the atmosphere. Lets subtract that...
-
+# massage the above into the correct form for this script
+target_instmags = {
+    'r': target_instmags['1'][0],
+    'g': target_instmags['2'][0],
+    'u': target_instmags['3'][0],
+}
 
 target_sdssmags = {
     key: val for key, val in target_instmags.iter()
 }
 
+print("I got an average instrumental magnitude of: ")
+pprint(target_instmags)
+print("Adding the zero points of:")
+print("r: {:.3f}\ng: {:.3f}\nu: {:.3f}".format(zp_r, zp_g, zp_u))
+
+target_instmags['r'] += zp_r
+target_instmags['g'] += zp_g
+target_instmags['u'] += zp_u
+
+print("gives uncorrected instrumental magnitudes of: ")
+pprint(target_instmags)
