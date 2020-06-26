@@ -33,6 +33,7 @@ comp_mags = {
 }
 
 # Atmospheric extinction coefficients. Calculated empirically for UCAM, NTT, super filters.
+# Must be in CCD order of the logfile. This is typically r, g, u
 k_ext = [0.1129, 0.2020, 0.4868]
 # Observatory name
 obsname = 'lasilla'
@@ -81,7 +82,7 @@ target_instmags = {
 }
 
 target_sdssmags = {
-    key: val for key, val in target_instmags.iter()
+    key: val for key, val in target_instmags.items()
 }
 
 print("I got an average instrumental magnitude of: ")
