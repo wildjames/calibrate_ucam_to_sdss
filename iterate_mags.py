@@ -23,9 +23,9 @@ g_zp = 26.218
 r_zp = 25.785
 
 # First iteration uses no colour term, so set the sdss mags as equal to the instrumental ones.
-u_sdss = u_inst
-g_sdss = g_inst
-r_sdss = r_inst
+u_sdss = u_inst + u_zp
+g_sdss = g_inst + g_zp
+r_sdss = r_inst + r_zp
 
 du = 99
 dg = 99

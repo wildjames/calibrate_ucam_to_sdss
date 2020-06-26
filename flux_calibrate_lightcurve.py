@@ -20,9 +20,9 @@ a_r = -0.032
 
 # Zero points in each CCD for UCAM on the NTT.
 # Calculated from SA 114 548 on 27 Sept. 2019
-u_zp = 24.817
-g_zp = 26.218
-r_zp = 25.785
+zp_u = 24.817
+zp_g = 26.218
+zp_r = 25.785
 
 # Comparison star SDSS magnitudes 
 #       => Target will be in SDSS mags!
