@@ -112,7 +112,6 @@ target_sdssmags = {
     key: val for key, val in target_instmags.items()
 }
 
-
 # Calibrate one frame for now:
 frame = 1
 
@@ -120,5 +119,34 @@ du = 99
 dg = 99
 dr = 99
 
+iteration = 0
 while (du + dg + dr) > 0.001:
-    target_u_counts = target_countcurves['u']
+    iteration += 1
+
+    u_sdss_new = target_instmags['u'] + zp_u + a_u*(comp_mags['u'] - comp_mags['g'])
+    g_sdss_new = target_instmags['g'] + zp_g + a_g*(comp_mags['g'] - comp_mags['r'])
+    r_sdss_new = target_instmags['r'] + zp_r + a_r*(comp_mags['g'] - comp_mags['r'])
+
+    du = abs(target_sdssmags['u'] - u_sdss_new)
+    dg = abs(target_sdssmags['g'] - g_sdss_new)
+    dr = abs(target_sdssmags['r'] - r_sdss_new)
+
+    target_sdssmags['u'] = u_sdss_new
+    target_sdssmags['g'] = g_sdss_new
+    target_sdssmags['r'] = r_sdss_new
+
+    print("Iteration {:>03d} | du: {:>06.3f} | dg: {:>06.3f} | dr: {:>06.3f} |".format(iteration, du, dg, dr), end='\r')
+
+print("Converged on the following target instrumental magnitudes:")
+print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**target_sdss_mags))
+
+
+
+
+
+
+# target_u_countflux = target_countcurves['u'] / exptimes['u']
+# target_g_countflux = target_countcurves['g'] / exptimes['g']
+# target_r_countflux = target_countcurves['r'] / exptimes['r']
+
+
