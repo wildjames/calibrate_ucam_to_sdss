@@ -148,7 +148,7 @@ while (du + dg + dr) > 0.001:
     target_sdssmags['g'] = g_sdss_new
     target_sdssmags['r'] = r_sdss_new
 
-    print("Iteration {:>03d} | du: {:>06.3f} | dg: {:>06.3f} | dr: {:>06.3f} |".format(iteration, du, dg, dr), end='\r')
+    print("Iteration {:>03d} | du: {:>06.3f} | dg: {:>06.3f} | dr: {:>06.3f} |".format(iteration, du, dg, dr), end='\n')
 
 print("\n\n\nConverged on the following target SDSS magnitudes:")
 print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**target_sdssmags))
