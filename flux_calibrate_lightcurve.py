@@ -2,8 +2,8 @@ from pprint import pprint
 from time import sleep
 
 import hipercam as hcam
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 from calphot.constructReference import get_instrumental_mags
 
@@ -14,19 +14,6 @@ from calphot.constructReference import get_instrumental_mags
 # Aperture 1 is assumed to be the target star!
 fname = 'data/run015.log'
 target_coords = "20 29 17.13 -43 40 19.8"
-
-# Colour term in each band, found by 
-# generate_colourtracks.py (READ THAT BEFORE YOU USE IT!!)
-##### --->> a_u uses u-g, g and r are g-r. <<--- #####
-a_u = -0.037
-a_g = -0.024
-a_r = -0.032
-
-# Zero points in each CCD for UCAM on the NTT.
-# Calculated from SA 114 548 on 27 Sept. 2019
-zp_u = 24.817
-zp_g = 26.218
-zp_r = 25.785
 
 # Comparison star SDSS magnitudes 
 #       => Target will be in SDSS mags!
@@ -42,7 +29,23 @@ k_ext = [0.1129, 0.2020, 0.4868]
 # Observatory name
 obsname = 'lasilla'
 
+# Colour term in each band, found by 
+# generate_colourtracks.py (READ THAT BEFORE YOU USE IT!!)
+##### --->> a_u uses u-g, g and r are g-r. <<--- #####
+a_u = -0.037
+a_g = -0.024
+a_r = -0.032
+
+# Zero points in each CCD for UCAM on the NTT.
+# Calculated from SA 114 548 on 27 Sept. 2019
+zp_u = 24.817
+zp_g = 26.218
+zp_r = 25.785
+
 #=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
+
+
+data = hcam.hlog.Hlog.read(fname)
 
 
 def sdss_mag2flux(mag):
@@ -55,6 +58,7 @@ def sdss_mag2flux(mag):
     return flux
 
 
+# Convert to mJy
 comp_flx = {key: sdss_mag2flux(comp_mags[key]) for key in comp_mags.keys()}
 
 print("\n\nUsing the following SDSS magnitudes: ")
@@ -62,7 +66,6 @@ pprint(comp_mags)
 print("I calculated the following fluxes, in mJy: ")
 pprint(comp_flx)
 
-data = hcam.hlog.Hlog.read(fname)
 
 # I need to know the time for an exposure in each filter
 exptimes = {
@@ -182,9 +185,9 @@ target_lightcurves['r'] = (target_countcurves['r'] / comparison_countcurves['r']
 
 fig, axs = plt.subplots(3)
 
-axs[0].step(target_lightcurves['u'].t, target_lightcurves['u'].y, color='blue')
-axs[1].step(target_lightcurves['g'].t, target_lightcurves['g'].y, color='green')
-axs[2].step(target_lightcurves['r'].t, target_lightcurves['r'].y, color='red')
+axs[0].step(target_lightcurves['u'].t, target_lightcurves['u'].y, yerr=target_lightcurves['u'].ye, color='blue')
+axs[1].step(target_lightcurves['g'].t, target_lightcurves['g'].y, yerr=target_lightcurves['g'].ye, color='green')
+axs[2].step(target_lightcurves['r'].t, target_lightcurves['r'].y, yerr=target_lightcurves['r'].ye, color='red')
 
 axs[2].set_ylabel("Time, MJD")
 axs[1].set_ylabel("SDSS Flux, mJy")
