@@ -56,12 +56,15 @@ def sdss_mag2flux(mag):
 
 comp_flx = {key: sdss_mag2flux(comp_mags[key]) for key in comp_mags.keys()}
 
-print("Using the following SDSS magnitudes: ")
+print("\n\nUsing the following SDSS magnitudes: ")
 pprint(comp_mags)
 print("I calculated the following fluxes, in mJy: ")
 pprint(comp_flx)
 
+print("Fetching instrumental magnitudes, corrected for atmospheric extinction....")
+sleep(2)
 data = hcam.hlog.Hlog.read(fname)
+print("\n\n\n\n\nDone!")
 
 # I need to know the time for an exposure in each filter
 exptimes = {
@@ -69,7 +72,7 @@ exptimes = {
     'g': data['2']['Exptim'].mean(),
     'u': data['3']['Exptim'].mean(),
 }
-print("The data has exposure times of: ")
+print("\nThe data has exposure times of: ")
 print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**exptimes))
 sleep(3)
 
@@ -94,16 +97,16 @@ target_instmags = {
     'u': target_instmags['3'][0],
 }
 
-print("I got an average instrumental magnitude of: ")
+print("\nI got an average instrumental magnitude of: ")
 pprint(target_instmags)
-print("Adding the zero points of:")
+print("\nAdding the zero points of:")
 print("r: {:.3f}\ng: {:.3f}\nu: {:.3f}".format(zp_r, zp_g, zp_u))
 
 target_instmags['r'] += zp_r
 target_instmags['g'] += zp_g
 target_instmags['u'] += zp_u
 
-print("gives uncorrected instrumental magnitudes of: ")
+print("\ngives uncorrected instrumental magnitudes of: ")
 pprint(target_instmags)
 
 # Initial SDSS mags are just set to the 
@@ -146,7 +149,7 @@ while (du + dg + dr) > 0.001:
 
     print("Iteration {:>03d} | du: {:>06.3f} | dg: {:>06.3f} | dr: {:>06.3f} |".format(iteration, du, dg, dr), end='\r')
 
-print("Converged on the following target SDSS magnitudes:")
+print("\n\n\nConverged on the following target SDSS magnitudes:")
 print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**target_sdssmags))
 
 
