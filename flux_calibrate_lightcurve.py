@@ -1,6 +1,9 @@
+from pprint import pprint
+from time import sleep
+
 import hipercam as hcam
 import numpy as np
-from pprint import pprint
+
 from calphot.constructReference import get_instrumental_mags
 
 #=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
@@ -60,6 +63,16 @@ pprint(comp_flx)
 
 data = hcam.hlog.Hlog.read(fname)
 
+# I need to know the time for an exposure in each filter
+exptimes = {
+    'r': data['1']['Exptim'].mean(),
+    'g': data['2']['Exptim'].mean(),
+    'u': data['3']['Exptim'].mean(),
+}
+print("The data has exposure times of: ")
+print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**exptimes))
+sleep(3)
+
 # Extract the raw count data from the CCD reduction
 target_countcurves = {
     'r': data.tseries('1', '1'),
@@ -81,10 +94,6 @@ target_instmags = {
     'u': target_instmags['3'][0],
 }
 
-target_sdssmags = {
-    key: val for key, val in target_instmags.items()
-}
-
 print("I got an average instrumental magnitude of: ")
 pprint(target_instmags)
 print("Adding the zero points of:")
@@ -96,3 +105,20 @@ target_instmags['u'] += zp_u
 
 print("gives uncorrected instrumental magnitudes of: ")
 pprint(target_instmags)
+
+# Initial SDSS mags are just set to the 
+# instrumental, zero point-added, atmos-subtracted magnitudes to start
+target_sdssmags = {
+    key: val for key, val in target_instmags.items()
+}
+
+
+# Calibrate one frame for now:
+frame = 1
+
+du = 99
+dg = 99
+dr = 99
+
+while (du + dg + dr) > 0.001:
+    target_u_counts = target_countcurves['u']
