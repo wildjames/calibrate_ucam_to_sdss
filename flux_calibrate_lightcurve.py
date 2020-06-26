@@ -89,7 +89,7 @@ comparison_countcurves = {
 print("Fetching instrumental magnitudes, corrected for atmospheric extinction....")
 sleep(2)
 target_instmags = get_instrumental_mags(data, target_coords, obsname, k_ext)
-print("\n\n\n\n\nDone!")
+print("\n\n\n\n\nDone fetching the atmosphere-subtracted instrumental magnitudes!")
 
 # massage the above into the correct form for this script
 target_instmags = {
