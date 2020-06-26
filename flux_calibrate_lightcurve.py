@@ -61,10 +61,7 @@ pprint(comp_mags)
 print("I calculated the following fluxes, in mJy: ")
 pprint(comp_flx)
 
-print("Fetching instrumental magnitudes, corrected for atmospheric extinction....")
-sleep(2)
 data = hcam.hlog.Hlog.read(fname)
-print("\n\n\n\n\nDone!")
 
 # I need to know the time for an exposure in each filter
 exptimes = {
@@ -89,7 +86,11 @@ comparison_lightcurves = {
 }
 
 # Lets calcualate the instrumental magnitudes here. This subtracts the atmosphere as well.
+print("Fetching instrumental magnitudes, corrected for atmospheric extinction....")
+sleep(2)
 target_instmags = get_instrumental_mags(data, target_coords, obsname, k_ext)
+print("\n\n\n\n\nDone!")
+
 # massage the above into the correct form for this script
 target_instmags = {
     'r': target_instmags['1'][0],
