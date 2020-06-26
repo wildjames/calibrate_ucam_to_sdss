@@ -112,14 +112,23 @@ target_sdssmags = {
     key: val for key, val in target_instmags.items()
 }
 
-# Calibrate one frame for now:
-frame = 1
+# I need to compute this factor:
+# 10^[0.4*a({g_targ - r_targ} - {g_comp - r_comp})]
+# where a is the colour term, and g-r could be u-g for each
+# This factor will be close to constant across the lightcurve, so I'm 
+# calculating it based on the average magnitudes of the star. These 
+# will be sigma-clipped means! But it means I need to find the 
+# SDSS colours of the target before I can continue. 
+#
+# Lets do that.
 
+# Tracking variables:
 du = 99
 dg = 99
 dr = 99
 
 iteration = 0
+
 while (du + dg + dr) > 0.001:
     iteration += 1
 
@@ -137,11 +146,8 @@ while (du + dg + dr) > 0.001:
 
     print("Iteration {:>03d} | du: {:>06.3f} | dg: {:>06.3f} | dr: {:>06.3f} |".format(iteration, du, dg, dr), end='\r')
 
-print("Converged on the following target instrumental magnitudes:")
+print("Converged on the following target SDSS magnitudes:")
 print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**target_sdss_mags))
-
-
-
 
 
 
