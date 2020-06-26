@@ -161,6 +161,18 @@ print("The colour correction applied to this star is:")
 print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**colour_terms))
 
 
+k_u = 0.4 * a_u * (target_sdssmags['u'] - target_sdssmags['g'] - comp_mags['u'] + comp_mags['g'])
+k_g = 0.4 * a_g * (target_sdssmags['g'] - target_sdssmags['r'] - comp_mags['g'] + comp_mags['r'])
+k_r = 0.4 * a_r * (target_sdssmags['g'] - target_sdssmags['r'] - comp_mags['g'] + comp_mags['r'])
+
+k_u = np.power(10,k_u)
+k_g = np.power(10,k_g)
+k_r = np.power(10,k_r)
+
+print("The following are the K factors in the equation: F_targ = K * F_comp * C_targ/C_comp")
+print("k_r: {:.3f}\nk_g: {:.3f}\nk_u: {:.3f}\n".format(k_r, k_g, k_u))
+
+
 # target_u_countflux = target_countcurves['u'] / exptimes['u']
 # target_g_countflux = target_countcurves['g'] / exptimes['g']
 # target_r_countflux = target_countcurves['r'] / exptimes['r']
