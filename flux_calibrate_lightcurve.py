@@ -1,7 +1,7 @@
 import hipercam as hcam
 import numpy as np
 from pprint import pprint
-
+from calphot.constructReference import get_instrumental_mags
 
 #=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
 ########## USER DEFINED INPUTS ##########
@@ -9,6 +9,7 @@ from pprint import pprint
 # Where are the target data stored? 
 # Aperture 1 is assumed to be the target star!
 fname = 'data/run015.log'
+target_coords = "20 29 17.13 -43 40 19.8"
 
 # Colour term in each band, found by 
 # generate_colourtracks.py (READ THAT BEFORE YOU USE IT!!)
@@ -30,6 +31,15 @@ comp_mags = {
     'g': 16.874,
     'r': 15.834,
 }
+
+# Atmospheric extinction coefficients. Calculated empirically for UCAM, NTT, super filters.
+k_ext = {
+    'u': 0.4868,
+    'g': 0.2020,
+    'r': 0.1129,
+}
+# Observatory name
+obsname = 'lasilla'
 
 #=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
 
@@ -65,10 +75,11 @@ comparison_lightcurves = {
     'u': data.tseries('3', '2'),
 }
 
-print(dir(target_countcurves['u'].to_mag()))
-target_instmags = {
-    key: target_countcurves[key].to_mag() for key in target_countcurves.keys()
-}
+# Lets calcualate the instrumental magnitudes here.
+target_instmags = get_instrumental_mags(data, coords, obsname, k_ext)
+# The above are under the atmosphere. Lets subtract that...
+
+
 target_sdssmags = {
     key: val for key, val in target_instmags.iter()
 }
