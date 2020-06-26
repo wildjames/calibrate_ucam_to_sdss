@@ -175,9 +175,9 @@ print("k_r: {:.3f}\nk_g: {:.3f}\nk_u: {:.3f}\n".format(k_r, k_g, k_u))
 
 target_lightcurves = {}
 
-target_lightcurves['u'] = k_u * comp_flx['u'] * (target_countcurves['u'] / comparison_countcurves['u'])
-target_lightcurves['g'] = k_g * comp_flx['g'] * (target_countcurves['g'] / comparison_countcurves['g'])
-target_lightcurves['r'] = k_r * comp_flx['r'] * (target_countcurves['r'] / comparison_countcurves['r'])
+target_lightcurves['u'] = (k_u * comp_flx['u']) * (target_countcurves['u'] / comparison_countcurves['u'])
+target_lightcurves['g'] = (k_g * comp_flx['g']) * (target_countcurves['g'] / comparison_countcurves['g'])
+target_lightcurves['r'] = (k_r * comp_flx['r']) * (target_countcurves['r'] / comparison_countcurves['r'])
 
 fig, axs = plt.subplots(3)
 
