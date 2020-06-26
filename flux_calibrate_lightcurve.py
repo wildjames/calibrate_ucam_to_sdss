@@ -3,6 +3,7 @@ from time import sleep
 
 import hipercam as hcam
 import numpy as np
+import matplotlib.pyplot as plt
 
 from calphot.constructReference import get_instrumental_mags
 
