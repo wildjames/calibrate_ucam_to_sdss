@@ -125,7 +125,7 @@ target_instmags = {
 }
 
 print("\nI got an average instrumental magnitude of: ")
-pprint(target_instmags)
+print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**target_instmags))
 print("\nAdding the zero points of:")
 print("r: {:.3f}\ng: {:.3f}\nu: {:.3f}".format(zp_r, zp_g, zp_u))
 
