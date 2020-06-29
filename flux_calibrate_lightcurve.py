@@ -139,7 +139,7 @@ print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**target_instmags))
 # Initial SDSS mags are just set to the 
 # instrumental, zero point-added, atmos-subtracted magnitudes to start
 target_sdssmags = {
-    key: val for key, val in target_instmags.items()
+    key: float(val) for key, val in target_instmags.items()
 }
 
 # I need to compute this factor:
@@ -159,7 +159,7 @@ dr = 99
 
 iteration = 0
 
-while (du + dg + dr) > 0.000001:
+while (du + dg + dr) > 0.0001:
     iteration += 1
 
     u_sdss_new = target_instmags['u'] + a_u*(comp_mags['u'] - comp_mags['g'])
@@ -191,9 +191,9 @@ k_u = 0.4 * a_u * ((target_sdssmags['u'] - target_sdssmags['g']) - (comp_mags['u
 k_g = 0.4 * a_g * ((target_sdssmags['g'] - target_sdssmags['r']) - (comp_mags['g'] - comp_mags['r']))
 k_r = 0.4 * a_r * ((target_sdssmags['g'] - target_sdssmags['r']) - (comp_mags['g'] - comp_mags['r']))
 
-k_u = np.power(10,k_u)
-k_g = np.power(10,k_g)
-k_r = np.power(10,k_r)
+k_u = np.power(10.0, k_u)
+k_g = np.power(10.0, k_g)
+k_r = np.power(10.0, k_r)
 
 print("The following are the K factors in the equation: F_targ = K * F_comp * C_targ/C_comp")
 print("k_r: {:.3f}\nk_g: {:.3f}\nk_u: {:.3f}\n".format(k_r, k_g, k_u))
