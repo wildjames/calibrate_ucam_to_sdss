@@ -228,17 +228,15 @@ print("")
 # Phase fold the lightcurve
 print("Slicing out data between phase {} and {}".format(lower_phase, upper_phase))
 for key in ['u','g','r']:
-    target_lightcurves[key].t -= eclTime
-
     # slice out the data between phase -0.5 and 0.5
-    slice_time = (gband.t - eclTime) / period
+    slice_time = (target_lightcurves[key].t - eclTime) / period
     slice_args = (slice_time < upper_phase)  *  (slice_time > lower_phase)
 
     target_lightcurves[key].t = hcam.hlog.Tseries(
         slice_time[slice_args],
-        target_lightcurves[key].t.y[slice_args],
-        target_lightcurves[key].t.ye[slice_args],
-        target_lightcurves[key].t.mask[slice_args]
+        target_lightcurves[key].y[slice_args],
+        target_lightcurves[key].ye[slice_args],
+        target_lightcurves[key].mask[slice_args]
     )
 
 
