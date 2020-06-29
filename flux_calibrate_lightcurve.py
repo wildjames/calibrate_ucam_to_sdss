@@ -20,6 +20,8 @@ from calphot.getEclipseTimes import tcorrect
 #fname = 'data/run015.log'
 fname = 'Quality_Reductions/2019_09_27-run015.log'
 oname = 'ASASSN-17jf'
+lc_dir = 'LIGHTCURVES'
+
 target_coords = "20 29 17.13 -43 40 19.8"
 T0 = 58754.12003
 period = 0.056789
