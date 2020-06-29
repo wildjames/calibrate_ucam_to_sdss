@@ -158,7 +158,7 @@ dr = 99
 
 iteration = 0
 
-while (du + dg + dr) > 0.001:
+while (du + dg + dr) > 0.000001:
     iteration += 1
 
     u_sdss_new = target_instmags['u'] + a_u*(comp_mags['u'] - comp_mags['g'])
