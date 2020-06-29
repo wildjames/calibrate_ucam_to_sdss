@@ -82,7 +82,7 @@ star_loc = coord.SkyCoord(
 # Convert to mJy
 comp_flx = {key: sdss_mag2flux(comp_mags[key]) for key in comp_mags.keys()}
 
-print("\n\nUsing the following SDSS magnitudes: ")
+print("\n\nUsing the following comparison SDSS magnitudes (AP{}): ".format(comparison_aperture))
 pprint(comp_mags)
 print("I calculated the following fluxes, in mJy: ")
 pprint(comp_flx)
