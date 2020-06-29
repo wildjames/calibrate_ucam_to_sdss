@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from astropy import time, coordinates as coord
 from astropy import units as u
+from astropy.stats import sigma_clipped_stats
 
 
 from calphot.constructReference import get_instrumental_mags
@@ -267,18 +268,26 @@ axs[0].errorbar(
     color='blue', drawstyle='steps'
 )
 axs[0].axhline(sdss_mag2flux(target_sdssmags['u']), color='black')
+clipped_mean_flux, _, _ = sigma_clipped_stats(target_sdssmags['u'])
+axs[0].axhline(clipped_mean_flux, color='magenta')
+
 axs[1].errorbar(
     target_lightcurves['g'].t, target_lightcurves['g'].y, 
     yerr=target_lightcurves['g'].ye, 
     color='green', drawstyle='steps'
 )
 axs[1].axhline(sdss_mag2flux(target_sdssmags['g']), color='black')
+clipped_mean_flux, _, _ = sigma_clipped_stats(target_sdssmags['g'])
+axs[1].axhline(clipped_mean_flux, color='magenta')
+
 axs[2].errorbar(
     target_lightcurves['r'].t, target_lightcurves['r'].y, 
     yerr=target_lightcurves['r'].ye, 
     color='red', drawstyle='steps'
 )
 axs[2].axhline(sdss_mag2flux(target_sdssmags['r']), color='black')
+clipped_mean_flux, _, _ = sigma_clipped_stats(target_sdssmags['r'])
+axs[2].axhline(clipped_mean_flux, color='magenta')
 
 axs[0].set_title("Flux calibrated, phase-folded lightcurves")
 axs[2].set_xlabel("Phase")
