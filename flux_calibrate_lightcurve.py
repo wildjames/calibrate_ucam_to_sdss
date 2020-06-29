@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from astropy import coordinates as coord
+from astropy import units as u
 
 from calphot.constructReference import get_instrumental_mags
 from calphot.getEclipseTimes import tcorrect
