@@ -232,13 +232,13 @@ for key in ['u','g','r']:
     slice_time = (target_lightcurves[key].t - eclTime) / period
     slice_args = (slice_time < upper_phase)  *  (slice_time > lower_phase)
 
-    target_lightcurves[key].t = hcam.hlog.Tseries(
+    target_lightcurves[key] = hcam.hlog.Tseries(
         slice_time[slice_args],
         target_lightcurves[key].y[slice_args],
         target_lightcurves[key].ye[slice_args],
         target_lightcurves[key].mask[slice_args]
     )
-
+print("Done!")
 
 
 fig, axs = plt.subplots(3, sharex=True)
