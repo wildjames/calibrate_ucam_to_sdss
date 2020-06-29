@@ -268,7 +268,7 @@ axs[0].errorbar(
     color='blue', drawstyle='steps'
 )
 axs[0].axhline(sdss_mag2flux(target_sdssmags['u']), color='black')
-clipped_mean_flux, _, _ = sigma_clipped_stats(target_sdssmags['u'])
+clipped_mean_flux, _, _ = sigma_clipped_stats(target_lightcurves['u'])
 axs[0].axhline(clipped_mean_flux, color='magenta')
 
 axs[1].errorbar(
@@ -277,7 +277,7 @@ axs[1].errorbar(
     color='green', drawstyle='steps'
 )
 axs[1].axhline(sdss_mag2flux(target_sdssmags['g']), color='black')
-clipped_mean_flux, _, _ = sigma_clipped_stats(target_sdssmags['g'])
+clipped_mean_flux, _, _ = sigma_clipped_stats(target_lightcurves['g'])
 axs[1].axhline(clipped_mean_flux, color='magenta')
 
 axs[2].errorbar(
@@ -286,7 +286,7 @@ axs[2].errorbar(
     color='red', drawstyle='steps'
 )
 axs[2].axhline(sdss_mag2flux(target_sdssmags['r']), color='black')
-clipped_mean_flux, _, _ = sigma_clipped_stats(target_sdssmags['r'])
+clipped_mean_flux, _, _ = sigma_clipped_stats(target_lightcurves['r'])
 axs[2].axhline(clipped_mean_flux, color='magenta')
 
 axs[0].set_title("Flux calibrated, phase-folded lightcurves")
