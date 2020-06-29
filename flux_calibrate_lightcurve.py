@@ -1,12 +1,13 @@
+from os.path import join
 from pprint import pprint
 from time import sleep
 
 import hipercam as hcam
 import matplotlib.pyplot as plt
 import numpy as np
-
-from astropy import coordinates as coord
+from astropy import time, coordinates as coord
 from astropy import units as u
+
 
 from calphot.constructReference import get_instrumental_mags
 from calphot.getEclipseTimes import tcorrect
@@ -18,6 +19,7 @@ from calphot.getEclipseTimes import tcorrect
 # Aperture 1 is assumed to be the target star!
 #fname = 'data/run015.log'
 fname = 'Quality_Reductions/2019_09_27-run015.log'
+oname = 'ASASSN-17jf'
 target_coords = "20 29 17.13 -43 40 19.8"
 T0 = 58754.12003
 period = 0.056789
@@ -251,8 +253,6 @@ print("Done!")
 
 fig, axs = plt.subplots(3, sharex=True)
 
-axs[0].set_title("Flux calibrated, phase-folded lightcurves")
-
 axs[0].errorbar(
     target_lightcurves['u'].t, target_lightcurves['u'].y, 
     yerr=target_lightcurves['u'].ye, 
@@ -269,7 +269,25 @@ axs[2].errorbar(
     color='red', drawstyle='steps'
 )
 
+axs[0].set_title("Flux calibrated, phase-folded lightcurves")
 axs[2].set_xlabel("Phase")
 axs[1].set_ylabel("SDSS Flux, mJy")
 
 plt.show()
+
+
+
+# Saving data
+for key, lc in target_lightcurves.items():
+    date = time.Time(eclTime, format='mjd')
+    date = date.strftime("%Y-%m-%d@%Hh%Mm")
+
+    filename = oname
+    filename = "{}_{}_{}.calib".format(filename, date, key)
+    filename = join(lc_dir, filename)
+
+    with open(filename, 'w') as f:
+        f.write("# Phase, Flux, Err_Flux\n")
+        for t, y, ye, mask in zip(lc.t, lc.y, lc.ye, lc.mask):
+            if not mask:
+                f.write("{} {} {}\n".format(t, y, ye))
