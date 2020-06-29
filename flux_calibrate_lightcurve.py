@@ -54,7 +54,7 @@ zp_r = 25.785
 data = hcam.hlog.Hlog.read(fname)
 
 star_loc = coord.SkyCoord(
-    coords,
+    target_coords,
     unit=(u.hourangle, u.deg), frame='icrs'
 )
 
