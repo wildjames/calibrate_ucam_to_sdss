@@ -112,7 +112,7 @@ comparison_countcurves = {
 
 # Lets calcualate the instrumental magnitudes here. This subtracts the atmosphere as well.
 print("Fetching instrumental magnitudes, corrected for atmospheric extinction....")
-sleep(2)
+sleep(1)
 target_instmags = get_instrumental_mags(data, target_coords, obsname, k_ext)
 print("\n\n\n\n\nDone fetching the atmosphere-subtracted instrumental magnitudes!")
 
@@ -205,6 +205,8 @@ target_lightcurves['g'] = (target_countcurves['g'] / comparison_countcurves['g']
 target_lightcurves['r'] = (target_countcurves['r'] / comparison_countcurves['r']) * (k_r * comp_flx['r'])
 
 
+
+print("Sroting out the time axis (correcting to BMJD, phase folding)...")
 # Correct the MJD times recorded by the camera, 
 target_lightcurves = {key: tcorrect(curve, star_loc, obsname) for key, curve in target_lightcurves.items()}
 
@@ -212,10 +214,10 @@ target_lightcurves = {key: tcorrect(curve, star_loc, obsname) for key, curve in 
 gband_lc = target_lightcurves['g']
 meantime = np.mean(gband_lc.t)
 E = (meantime-T0) / period
-print("  The mean time of this eclipse is {:.3f}.".format(meantime))
-print("  From ephemeris data, I get an eclipse Number,")
-print("    E = ({:.3f} - [T0={:.3f}]) / [P={:.5f}]".format(meantime, T0, period))
-print("    E = {:.3f}".format(E))
+print("The mean time of this eclipse is {:.3f}.".format(meantime))
+print("From ephemeris data, I get an eclipse Number,")
+print("  E = ({:.3f} - [T0={:.3f}]) / [P={:.5f}]".format(meantime, T0, period))
+print("  E = {:.3f}".format(E))
 
 E = np.rint(E)
 # The above can be off, if the eclipse isnt the minimum. in/decriment until it's within bounds
@@ -226,12 +228,12 @@ while T0 + E*period > gband_lc.t[-1]:
     print("    !!! Eclipse time not within these data! Decrimenting E...")
     E -= 1
 
-print("  I think that the eclipse spanning from {:.3f} to {:.3f} is cycle number {}".format(
+print("I think that the eclipse spanning from {:.3f} to {:.3f} is cycle number {}".format(
     gband_lc.t[0], gband_lc.t[-1], E)
 )
 
 eclTime = T0 + E*period
-print("  The eclipse is then at time {:.3f}".format(eclTime))
+print("The eclipse is then at time {:.3f}".format(eclTime))
 print("")
 
 # Phase fold the lightcurve
