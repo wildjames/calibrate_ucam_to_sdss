@@ -186,9 +186,9 @@ print("The colour corrections applied to this star are:")
 print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**colour_terms))
 
 # What do these correspond to?
-k_u = 0.4 * a_u * (target_sdssmags['u'] - target_sdssmags['g'] - comp_mags['u'] + comp_mags['g'])
-k_g = 0.4 * a_g * (target_sdssmags['g'] - target_sdssmags['r'] - comp_mags['g'] + comp_mags['r'])
-k_r = 0.4 * a_r * (target_sdssmags['g'] - target_sdssmags['r'] - comp_mags['g'] + comp_mags['r'])
+k_u = 0.4 * a_u * ((target_sdssmags['u'] - target_sdssmags['g']) - (comp_mags['u'] - comp_mags['g']))
+k_g = 0.4 * a_g * ((target_sdssmags['g'] - target_sdssmags['r']) - (comp_mags['g'] - comp_mags['r']))
+k_r = 0.4 * a_r * ((target_sdssmags['g'] - target_sdssmags['r']) - (comp_mags['g'] - comp_mags['r']))
 
 k_u = np.power(10,k_u)
 k_g = np.power(10,k_g)
