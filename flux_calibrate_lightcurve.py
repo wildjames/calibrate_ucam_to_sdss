@@ -1,4 +1,5 @@
-from os.path import join
+from os.path import join, isdir
+from os import mkdir
 from pprint import pprint
 from time import sleep
 
@@ -280,6 +281,9 @@ plt.show()
 
 
 # Saving data
+if not isdir(lc_dir):
+    mkdir(lc_dir)
+
 for key, lc in target_lightcurves.items():
     date = time.Time(eclTime, format='mjd')
     date = date.strftime("%Y-%m-%d@%Hh%Mm")
