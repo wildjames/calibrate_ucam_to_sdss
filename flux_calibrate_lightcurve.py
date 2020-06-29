@@ -32,10 +32,11 @@ lower_phase, upper_phase = -0.5, 0.5
 
 # Comparison star SDSS magnitudes 
 #       => Target will be in SDSS mags!
+comparison_aperture = '5'
 comp_mags = {
-    'u': 19.728,
-    'g': 16.874,
-    'r': 15.834,
+    'u': 18.591,
+    'g': 17.075,
+    'r': 16.562,
 }
 
 # Atmospheric extinction coefficients. Calculated empirically for UCAM, NTT, super filters.
@@ -59,15 +60,6 @@ zp_r = 25.785
 
 #=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
 
-
-data = hcam.hlog.Hlog.read(fname)
-
-star_loc = coord.SkyCoord(
-    target_coords,
-    unit=(u.hourangle, u.deg), frame='icrs'
-)
-
-
 def sdss_mag2flux(mag):
     '''Takes an SDSS magnitude, returns the corresponding flux in [mJy]'''
     alpha = 3631e3
@@ -77,6 +69,15 @@ def sdss_mag2flux(mag):
 
     return flux
 
+
+
+
+data = hcam.hlog.Hlog.read(fname)
+
+star_loc = coord.SkyCoord(
+    target_coords,
+    unit=(u.hourangle, u.deg), frame='icrs'
+)
 
 # Convert to mJy
 comp_flx = {key: sdss_mag2flux(comp_mags[key]) for key in comp_mags.keys()}
@@ -104,9 +105,9 @@ target_countcurves = {
     'u': data.tseries('3', '1') / exptimes['u'],
 }
 comparison_countcurves = {
-    'r': data.tseries('1', '2') / exptimes['r'],
-    'g': data.tseries('2', '2') / exptimes['g'],
-    'u': data.tseries('3', '2') / exptimes['u'],
+    'r': data.tseries('1', comparison_aperture) / exptimes['r'],
+    'g': data.tseries('2', comparison_aperture) / exptimes['g'],
+    'u': data.tseries('3', comparison_aperture) / exptimes['u'],
 }
 
 # Lets calcualate the instrumental magnitudes here. This subtracts the atmosphere as well.

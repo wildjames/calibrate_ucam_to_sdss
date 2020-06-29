@@ -7,9 +7,14 @@ import numpy as np
 # r_inst = -14.614
 
 # Aperture 2
-u_inst = -4.9831
-g_inst = -9.3194
-r_inst = -9.9180
+# u_inst = -4.9831
+# g_inst = -9.3194
+# r_inst = -9.9180
+
+# Aperture 5
+u_inst = -6.170
+g_inst = -9.131
+r_inst = -9.207
 
 # Found parameters. Don't touch unless you know what you're doing!
 # Colour terms. a_u is u-g, g and r are g-r.
