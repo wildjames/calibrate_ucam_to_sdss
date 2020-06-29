@@ -133,7 +133,7 @@ target_instmags['g'] += zp_g
 target_instmags['u'] += zp_u
 
 print("\ngives uncorrected instrumental magnitudes of: ")
-pprint(target_instmags)
+print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**target_instmags))
 
 # Initial SDSS mags are just set to the 
 # instrumental, zero point-added, atmos-subtracted magnitudes to start
@@ -264,16 +264,19 @@ axs[0].errorbar(
     yerr=target_lightcurves['u'].ye, 
     color='blue', drawstyle='steps'
 )
+axs[0].axhline(target_sdssmags['u'], colour='black')
 axs[1].errorbar(
     target_lightcurves['g'].t, target_lightcurves['g'].y, 
     yerr=target_lightcurves['g'].ye, 
     color='green', drawstyle='steps'
 )
+axs[1].axhline(target_sdssmags['g'], colour='black')
 axs[2].errorbar(
     target_lightcurves['r'].t, target_lightcurves['r'].y, 
     yerr=target_lightcurves['r'].ye, 
     color='red', drawstyle='steps'
 )
+axs[2].axhline(target_sdssmags['r'], colour='black')
 
 axs[0].set_title("Flux calibrated, phase-folded lightcurves")
 axs[2].set_xlabel("Phase")
