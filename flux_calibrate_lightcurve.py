@@ -231,7 +231,7 @@ for key in ['u','g','r']:
     target_lightcurves[key].t -= eclTime
 
     # slice out the data between phase -0.5 and 0.5
-    slice_time = (ratio.t - eclTime) / period
+    slice_time = (gband.t - eclTime) / period
     slice_args = (slice_time < upper_phase)  *  (slice_time > lower_phase)
 
     target_lightcurves[key].t = hcam.hlog.Tseries(
