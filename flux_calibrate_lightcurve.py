@@ -5,7 +5,10 @@ import hipercam as hcam
 import matplotlib.pyplot as plt
 import numpy as np
 
+from astropy import coordinates as coord
+
 from calphot.constructReference import get_instrumental_mags
+from calphot.getEclipseTimes import tcorrect
 
 #=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
 ########## USER DEFINED INPUTS ##########
@@ -14,6 +17,9 @@ from calphot.constructReference import get_instrumental_mags
 # Aperture 1 is assumed to be the target star!
 fname = 'data/run015.log'
 target_coords = "20 29 17.13 -43 40 19.8"
+T0 = 58754.12003
+period = 0.056789
+lower_phase, upper_phase = -0.5, 0.5
 
 # Comparison star SDSS magnitudes 
 #       => Target will be in SDSS mags!
@@ -46,6 +52,11 @@ zp_r = 25.785
 
 
 data = hcam.hlog.Hlog.read(fname)
+
+star_loc = coord.SkyCoord(
+    coords,
+    unit=(u.hourangle, u.deg), frame='icrs'
+)
 
 
 def sdss_mag2flux(mag):
@@ -183,13 +194,75 @@ target_lightcurves['u'] = (target_countcurves['u'] / comparison_countcurves['u']
 target_lightcurves['g'] = (target_countcurves['g'] / comparison_countcurves['g']) * (k_g * comp_flx['g'])
 target_lightcurves['r'] = (target_countcurves['r'] / comparison_countcurves['r']) * (k_r * comp_flx['r'])
 
+
+# Correct the MJD times recorded by the camera, 
+target_lightcurves = {key: tcorrect(curve, star_loc, obsname) for key, curve in target_lightcurves.items()}
+
+
+gband_lc = target_lightcurves['g']
+meantime = np.mean(gband_lc.t)
+E = (meantime-T0) / period
+print("  The mean time of this eclipse is {:.3f}.".format(meantime))
+print("  From ephemeris data, I get an eclipse Number,")
+print("    E = ({:.3f} - [T0={:.3f}]) / [P={:.5f}]".format(meantime, T0, period))
+print("    E = {:.3f}".format(E))
+
+E = np.rint(E)
+# The above can be off, if the eclipse isnt the minimum. in/decriment until it's within bounds
+while T0 + E*period < gband_lc.t[0]:
+    print("    !!! Eclipse time not within these data! Incrimenting E...")
+    E += 1
+while T0 + E*period > gband_lc.t[-1]:
+    print("    !!! Eclipse time not within these data! Decrimenting E...")
+    E -= 1
+
+print("  I think that the eclipse spanning from {:.3f} to {:.3f} is cycle number {}".format(
+    gband_lc.t[0], gband_lc.t[-1], E)
+)
+
+eclTime = T0 + E*period
+print("  The eclipse is then at time {:.3f}".format(eclTime))
+print("")
+
+# Phase fold the lightcurve
+print("Slicing out data between phase {} and {}".format(lower_phase, upper_phase))
+for key in ['u','g','r']:
+    target_lightcurves[key].t -= eclTime
+
+    # slice out the data between phase -0.5 and 0.5
+    slice_time = (ratio.t - eclTime) / period
+    slice_args = (slice_time < upper_phase)  *  (slice_time > lower_phase)
+
+    target_lightcurves[key].t = hcam.hlog.Tseries(
+        slice_time[slice_args],
+        target_lightcurves[key].t.y[slice_args],
+        target_lightcurves[key].t.ye[slice_args],
+        target_lightcurves[key].t.mask[slice_args]
+    )
+
+
+
 fig, axs = plt.subplots(3, sharex=True)
 
-axs[0].errorbar(target_lightcurves['u'].t, target_lightcurves['u'].y, yerr=target_lightcurves['u'].ye, color='blue', drawstyle='steps')
-axs[1].errorbar(target_lightcurves['g'].t, target_lightcurves['g'].y, yerr=target_lightcurves['g'].ye, color='green', drawstyle='steps')
-axs[2].errorbar(target_lightcurves['r'].t, target_lightcurves['r'].y, yerr=target_lightcurves['r'].ye, color='red', drawstyle='steps')
+axs[0].set_title("Flux calibrated, phase-folded lightcurves")
 
-axs[2].set_ylabel("Time, MJD")
+axs[0].errorbar(
+    target_lightcurves['u'].t, target_lightcurves['u'].y, 
+    yerr=target_lightcurves['u'].ye, 
+    color='blue', drawstyle='steps'
+)
+axs[1].errorbar(
+    target_lightcurves['g'].t, target_lightcurves['g'].y, 
+    yerr=target_lightcurves['g'].ye, 
+    color='green', drawstyle='steps'
+)
+axs[2].errorbar(
+    target_lightcurves['r'].t, target_lightcurves['r'].y, 
+    yerr=target_lightcurves['r'].ye, 
+    color='red', drawstyle='steps'
+)
+
+axs[2].set_xlabel("Phase")
 axs[1].set_ylabel("SDSS Flux, mJy")
 
 plt.show()
