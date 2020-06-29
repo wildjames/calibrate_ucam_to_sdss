@@ -238,7 +238,14 @@ for key in ['u','g','r']:
         target_lightcurves[key].ye[slice_args],
         target_lightcurves[key].mask[slice_args]
     )
+    
+    # Bad data has error = -1
+    mask = np.where(target_lightcurves[key].ye != -1)
+    target_lightcurves[key] = target_lightcurves[key][mask]
 print("Done!")
+
+
+
 
 
 fig, axs = plt.subplots(3, sharex=True)
