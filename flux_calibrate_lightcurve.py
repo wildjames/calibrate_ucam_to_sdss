@@ -21,8 +21,8 @@ from calphot.getEclipseTimes import tcorrect
 # Aperture 1 is assumed to be the target star!
 #fname = 'data/run015.log'
 # fname = 'Quality_Reductions/2019_09_27-run015.log'
-fname = 'Quality_Reductions/2019_09_29-run015.log'
-# fname = 'Quality_Reductions/2019_09_30-run013.log'
+# fname = 'Quality_Reductions/2019_09_29-run015.log'
+fname = 'Quality_Reductions/2019_09_30-run013.log'
 oname = 'ASASSN-17jf'
 lc_dir = 'LIGHTCURVES'
 
