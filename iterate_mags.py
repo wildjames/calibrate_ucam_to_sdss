@@ -1,20 +1,27 @@
 import numpy as np
+from calphot.constructReference import get_instrumental_mags
+from hipercam.hlog.Hlog import read
 
 # Observed instrumental super NTT mags
-# SA 114 548 (verification step)
-# u_inst = -9.309
-# g_inst = -13.936
-# r_inst = -14.614
-
-# Aperture 2
-# u_inst = -4.9831
-# g_inst = -9.3194
-# r_inst = -9.9180
-
 # Aperture 5
-u_inst = -6.170
-g_inst = -9.131
-r_inst = -9.207
+# u_inst = -6.170
+# g_inst = -9.131
+# r_inst = -9.207
+fname = 'Quality_Reductions/2019_09_27-run015.log'
+
+data = read(fname)
+coords = "20 29 17.13 -43 40 19.8"
+k_ext = [0.1129, 0.2020, 0.4868]
+obsname = 'lasilla'
+
+mags = get_instrumental_mags(data, coords, obsname, k_ext)
+u_inst = mags['3'][4]
+g_inst = mags['2'][4]
+r_inst = mags['1'][4]
+print("Got the following instrumental magnitudes:")
+print("r: {:.3f}".format(r_inst))
+print("g: {:.3f}".format(g_inst))
+print("u: {:.3f}".format(u_inst))
 
 # Found parameters. Don't touch unless you know what you're doing!
 # Colour terms. a_u is u-g, g and r are g-r.
