@@ -1,6 +1,6 @@
 import numpy as np
 from calphot.constructReference import get_instrumental_mags
-from hipercam.hlog.Hlog import read
+import hipercam as hcam
 
 # Observed instrumental super NTT mags
 # Aperture 5
@@ -9,7 +9,7 @@ from hipercam.hlog.Hlog import read
 # r_inst = -9.207
 fname = 'Quality_Reductions/2019_09_27-run015.log'
 
-data = read(fname)
+data = hcam.hlog.Hlog.read(fname)
 coords = "20 29 17.13 -43 40 19.8"
 k_ext = [0.1129, 0.2020, 0.4868]
 obsname = 'lasilla'
