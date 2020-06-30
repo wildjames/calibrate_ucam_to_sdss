@@ -16,7 +16,7 @@ filters = [
     # 'u', 'g', 'r', 'i', 'z'
 ]
 sdss_filters = ['u', 'g', 'r', 'i', 'z']
-# TODO: Get these values!
+# These are not relevant - leave as zero for all bands
 k_ext = {
     'sdss:u': 0.0,
     'sdss:g': 0.0,
@@ -30,7 +30,7 @@ k_ext = {
     'ucam:ntt:z_s': 0.0,
 }
 
-targetband = 'g'
+targetband = 'u'
 # diagnostic = 'u-g'
 diagnostic = 'g-r'
 
@@ -41,7 +41,6 @@ def get_all_mags(teff, logg, ebv):
         'logg':logg,
         'ebv': ebv,
     }
-
 
     sp = S.Icat('phoenix', teff, 0.0, logg)
     sp *= S.reddening.Extinction(ebv)
@@ -86,11 +85,9 @@ for logg, teff in zip(teffs, loggs):
     if teff > 4000:
         mags = get_all_mags(teff, logg, 0.0)
 
-        # gr = mags['ucam:ntt:g_s'] - mags['ucam:ntt:r_s']
-        
-        mags['g-r'] = mags['sdss:g'] - mags['sdss:r'],
-        mags['u-g'] = mags['sdss:u'] - mags['sdss:g'],
-        
+        mags['g-r'] = mags['sdss:g'] - mags['sdss:r']
+        mags['u-g'] = mags['sdss:u'] - mags['sdss:g']
+
         mags["{0}_s-{0}".format(targetband)] = mags['ucam:ntt:{}_s'.format(targetband)] - mags['sdss:{}'.format(targetband)]
 
         MIST_df = MIST_df.append(mags, ignore_index=True)
@@ -221,15 +218,17 @@ def chisq(args):
     zero_point, colour_term = args
 
     calc_wd_correction = zero_point + colour_term * koester_df[diagnostic]
+
     diff = calc_wd_correction - koester_df['{0}_s-{0}'.format(targetband)]
     chisq += (diff**2).sum()
+
 
     if diagnostic == 'u-g':
         color = MIST_df['sdss:u']-MIST_df['sdss:g']
     else:
         color = MIST_df['sdss:g']-MIST_df['sdss:r']
-
     calc_ms_correction = zero_point + (colour_term * color)
+
     diff = calc_ms_correction - (MIST_df['ucam:ntt:{0}_s'.format(targetband)] - MIST_df['sdss:{0}'.format(targetband)])
     chisq += (diff**2).sum()
 
@@ -246,14 +245,14 @@ print(soln)
 fig, ax = plt.subplots(figsize=(10, 5))
 
 MIST_df.plot.scatter(
-    diagnostic, '{0}_s-{0}'.format(targetband), 
-    ax=ax, 
-    color='black', label="MIST MS models, 8.5Gyrs"
+    diagnostic, '{0}_s-{0}'.format(targetband),
+    ax=ax,
+    color='black', label="MIST MS models, 8.5Gyrs",
 )
 koester_df.plot.scatter(
-    diagnostic, '{0}_s-{0}'.format(targetband), 
-    ax=ax, 
-    color='red', label='WD Koester Models, logg {}'.format(logg)
+    diagnostic, '{0}_s-{0}'.format(targetband),
+    ax=ax,
+    color='red', label='WD Koester Models, logg {}'.format(logg),
 )
 
 
@@ -262,7 +261,7 @@ zp, colterm = soln['x']
 xr = np.linspace(MIST_df[diagnostic].min(), MIST_df[diagnostic].max(), 100)
 yr = zp + colterm * xr
 
-ax.plot(xr, yr, color='blue', label='Fitted line')
+ax.plot(xr, yr, color='blue', label='Fitted line, colour term: {:.3f}'.format(colterm))
 
 # ax.set_xlabel("UCAM/NTT gs - rs")
 ax.set_ylabel("UCAM/NTT ${0}_s$ - SDSS ${0}$".format(targetband))
@@ -291,6 +290,6 @@ else:
 
 ax.legend()
 plt.tight_layout()
-plt.savefig("{}band.pdf".format(targetband))
+plt.savefig("figs/{}band.pdf".format(targetband))
 plt.show()
 

@@ -21,8 +21,8 @@ from calphot.getEclipseTimes import tcorrect
 # Aperture 1 is assumed to be the target star!
 #fname = 'data/run015.log'
 # fname = 'Quality_Reductions/2019_09_27-run015.log'
-fname = 'Quality_Reductions/2019_09_29-run015.log'
-fname = 'Quality_Reductions/2019_09_30-run013.log'
+# fname = 'Quality_Reductions/2019_09_29-run015.log'
+# fname = 'Quality_Reductions/2019_09_30-run013.log'
 oname = 'ASASSN-17jf'
 lc_dir = 'LIGHTCURVES'
 
@@ -50,7 +50,7 @@ obsname = 'lasilla'
 # generate_colourtracks.py (READ THAT BEFORE YOU USE IT!!)
 ##### --->> a_u uses u-g, g and r are g-r. <<--- #####
 a_u = -0.037
-a_g = -0.024
+a_g = -0.026
 a_r = -0.032
 
 # Zero points in each CCD for UCAM on the NTT.
@@ -187,9 +187,9 @@ print("The colour corrections applied to this star are:")
 print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**colour_terms))
 
 # What do these correspond to?
-k_u = -0.4 * a_u * ((target_sdssmags['u'] - target_sdssmags['g']) - (comp_mags['u'] - comp_mags['g']))
-k_g = -0.4 * a_g * ((target_sdssmags['g'] - target_sdssmags['r']) - (comp_mags['g'] - comp_mags['r']))
-k_r = -0.4 * a_r * ((target_sdssmags['g'] - target_sdssmags['r']) - (comp_mags['g'] - comp_mags['r']))
+k_u = 0.4 * a_u * ((target_sdssmags['u'] - target_sdssmags['g']) - (comp_mags['u'] - comp_mags['g']))
+k_g = 0.4 * a_g * ((target_sdssmags['g'] - target_sdssmags['r']) - (comp_mags['g'] - comp_mags['r']))
+k_r = 0.4 * a_r * ((target_sdssmags['g'] - target_sdssmags['r']) - (comp_mags['g'] - comp_mags['r']))
 
 k_u = np.power(10.0, k_u)
 k_g = np.power(10.0, k_g)
