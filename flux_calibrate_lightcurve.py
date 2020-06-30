@@ -20,9 +20,9 @@ from calphot.getEclipseTimes import tcorrect
 # Where are the target data stored? 
 # Aperture 1 is assumed to be the target star!
 #fname = 'data/run015.log'
-# fname = 'Quality_Reductions/2019_09_27-run015.log'
+fname = 'Quality_Reductions/2019_09_27-run015.log'
 # fname = 'Quality_Reductions/2019_09_29-run015.log'
-fname = 'Quality_Reductions/2019_09_30-run013.log'
+# fname = 'Quality_Reductions/2019_09_30-run013.log'
 oname = 'ASASSN-17jf'
 lc_dir = 'LIGHTCURVES'
 
@@ -55,9 +55,9 @@ a_r = -0.032
 
 # Zero points in each CCD for UCAM on the NTT.
 # Calculated from SA 114 548 on 27 Sept. 2019
-zp_u = 24.817
-zp_g = 26.218
-zp_r = 25.785
+zp_u = 24.815
+zp_g = 26.184
+zp_r = 25.791
 
 #=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
 
@@ -159,7 +159,7 @@ dr = 99
 
 iteration = 0
 
-while (du + dg + dr) > 0.0001:
+while (du + dg + dr) > 0.0001 and iteration < 10:
     iteration += 1
 
     u_sdss_new = target_instmags['u'] + a_u*(comp_mags['u'] - comp_mags['g'])
