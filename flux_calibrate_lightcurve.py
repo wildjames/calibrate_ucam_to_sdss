@@ -35,9 +35,9 @@ lower_phase, upper_phase = -0.5, 0.5
 #       => Target will be in SDSS mags!
 comparison_aperture = '5'
 comp_mags = {
-    'u': 18.591,
-    'g': 17.075,
-    'r': 16.562,
+    'u': 18.002
+    'g': 17.114
+    'r': 16.455
 }
 
 # Atmospheric extinction coefficients. Calculated empirically for UCAM, NTT, super filters.
