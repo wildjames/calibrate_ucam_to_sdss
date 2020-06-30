@@ -267,9 +267,9 @@ axs[0].errorbar(
     yerr=target_lightcurves['u'].ye, 
     color='blue', drawstyle='steps'
 )
-axs[0].axhline(sdss_mag2flux(target_sdssmags['u']), color='black')
+axs[0].axhline(sdss_mag2flux(target_sdssmags['u']), color='black', label='Calculated target magnitude')
 clipped_mean_flux, _, _ = sigma_clipped_stats(target_lightcurves['u'].y)
-axs[0].axhline(clipped_mean_flux, color='magenta')
+axs[0].axhline(clipped_mean_flux, color='magenta', label='Mean lightcurve')
 
 axs[1].errorbar(
     target_lightcurves['g'].t, target_lightcurves['g'].y, 
