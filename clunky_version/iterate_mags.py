@@ -3,10 +3,6 @@ from calphot.constructReference import get_instrumental_mags
 import hipercam as hcam
 
 # Observed instrumental super NTT mags
-# Aperture 5
-# u_inst = -6.170
-# g_inst = -9.131
-# r_inst = -9.207
 fname = 'Quality_Reductions/2019_09_27-run015.log'
 
 data = hcam.hlog.Hlog.read(fname)
@@ -14,10 +10,14 @@ coords = "20 29 17.13 -43 40 19.8"
 k_ext = [0.1129, 0.2020, 0.4868]
 obsname = 'lasilla'
 
+ap_index = 4
+
 mags = get_instrumental_mags(data, coords, obsname, k_ext)
-u_inst = mags['3'][4]
-g_inst = mags['2'][4]
-r_inst = mags['1'][4]
+
+
+u_inst = mags['3'][ap_index]
+g_inst = mags['2'][ap_index]
+r_inst = mags['1'][ap_index]
 print("Got the following instrumental magnitudes:")
 print("r: {:.3f}".format(r_inst))
 print("g: {:.3f}".format(g_inst))
