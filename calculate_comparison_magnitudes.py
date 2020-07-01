@@ -106,7 +106,6 @@ for ap_index in range(len(mags)):
     sdss_mags['g'].append(g_sdss)
     sdss_mags['r'].append(r_sdss)
 
-print(sdss_mags)
 sdss_df = pd.DataFrame()
 for ap_index in range(len(mags)):
     row = {
@@ -116,6 +115,9 @@ for ap_index in range(len(mags)):
         'r': sdss_mags['r'][ap_index],
     }
     sdss_df = sdss_df.append(row, ignore_index=True)
+print("Comparison star SDSS magnitudes:")
 print(sdss_df)
+
+sdss_df.to_csv("tables/comparison_star_sdss_mags.csv")
 
 
