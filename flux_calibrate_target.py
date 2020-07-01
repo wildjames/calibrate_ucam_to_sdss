@@ -143,6 +143,16 @@ for fname in fnames:
     # Extract the raw count data from the CCD reduction
     data = hcam.hlog.Hlog.read(fname)
 
+    # I need to know the time for an exposure in each filter
+    exptimes = {
+        'r': data['1']['Exptim'].mean(),
+        'g': data['2']['Exptim'].mean(),
+        'u': data['3']['Exptim'].mean(),
+    }
+    print("\n\nThe data has exposure times of: ")
+    print("r: {r:.3f}\ng: {g:.3f}\nu: {u:.3f}\n".format(**exptimes))
+
+    print("Extracting the count fluxes...")
     target_countcurves = {
         'r': data.tseries('1', '1') / exptimes['r'],
         'g': data.tseries('2', '1') / exptimes['g'],
@@ -153,13 +163,16 @@ for fname in fnames:
         'g': data.tseries('2', comparison_aperture) / exptimes['g'],
         'u': data.tseries('3', comparison_aperture) / exptimes['u'],
     }
+    print("Done!\n")
 
+    print("Calculating fluxes in mJy...")
     # Lets compute the fluxes of my lightcurves
     target_lightcurves = {}
 
     target_lightcurves['u'] = (target_countcurves['u'] / comparison_countcurves['u']) * (k_u * comp_flx['u'])
     target_lightcurves['g'] = (target_countcurves['g'] / comparison_countcurves['g']) * (k_g * comp_flx['g'])
     target_lightcurves['r'] = (target_countcurves['r'] / comparison_countcurves['r']) * (k_r * comp_flx['r'])
+    print("Done!\n")
 
     # The flux is now sorted! But the time axis is out of whack. 
     print("Sorting out the time axis (correcting to BMJD, phase folding)...")
@@ -193,7 +206,7 @@ for fname in fnames:
     print("")
 
     # Phase fold the lightcurve
-    print("Slicing out data between phase {} and {}".format(lower_phase, upper_phase))
+    print("Slicing out data between phase {} and {}...".format(lower_phase, upper_phase))
     for band in bands:
         # slice out the data between phase -0.5 and 0.5
         slice_time = (target_lightcurves[band].t - eclTime) / period
