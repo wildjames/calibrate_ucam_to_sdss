@@ -92,7 +92,7 @@ if __name__ in "__main__":
     # Gather data on the standard star
     smith_mags, smith_coords = get_smith_info(std_name, smith_table_fname)
     print("{} magnitudes:".format(std_name))
-    print('\n'.join(["{}: {}".format(key, val) for key, val in smith_mags.items()]))
+    print('\n'.join(["{}: {:.3f}".format(key, val) for key, val in smith_mags.items()]))
 
     print("I will gather the instrumental magnitudes observed in {}\n\n".format(standard_star_reduction))
     sleep(2)
@@ -122,7 +122,7 @@ if __name__ in "__main__":
         print("{}_zp: {:.3f}".format(band, zero_points[band]))
 
     print("\n\nI calculated the zero points, accounting for airmass in the target reduction and the bandpass differences between UCAM and SDSS, as:")
-    print('\n'.join(["{}: {}".format(key, val) for key, val in zero_points.items()]))
+    print('\n'.join(["{}: {:.4f}".format(key, val) for key, val in zero_points.items()]))
 
     with open(values_fname, 'w') as f:
         f.write(json.dumps(variables))
