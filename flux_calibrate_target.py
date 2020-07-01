@@ -169,9 +169,9 @@ for fname in fnames:
     # Lets compute the fluxes of my lightcurves
     target_lightcurves = {}
 
-    target_lightcurves['u'] = (target_countcurves['u'] / comparison_countcurves['u']) * (k_u * comp_flx['u'])
-    target_lightcurves['g'] = (target_countcurves['g'] / comparison_countcurves['g']) * (k_g * comp_flx['g'])
-    target_lightcurves['r'] = (target_countcurves['r'] / comparison_countcurves['r']) * (k_r * comp_flx['r'])
+    target_lightcurves['u'] = (target_countcurves['u'] / comparison_countcurves['u']) * (Ku * comp_flx['u'])
+    target_lightcurves['g'] = (target_countcurves['g'] / comparison_countcurves['g']) * (Kg * comp_flx['g'])
+    target_lightcurves['r'] = (target_countcurves['r'] / comparison_countcurves['r']) * (Kr * comp_flx['r'])
     print("Done!\n")
 
     # The flux is now sorted! But the time axis is out of whack. 
