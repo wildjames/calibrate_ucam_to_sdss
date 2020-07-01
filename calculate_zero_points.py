@@ -1,11 +1,11 @@
 import json
 
-# import hipercam as hcam
+import hipercam as hcam
 import numpy as np
 import pandas as pd
 from os.path import abspath, split, join
 
-# from calphot.constructReference import get_instrumental_mags
+from calphot.constructReference import get_instrumental_mags
 
 mydir = split(abspath(__file__))[0]
 # This is the machine-readable version of the smith table. You shouldn't need to fiddle this!
