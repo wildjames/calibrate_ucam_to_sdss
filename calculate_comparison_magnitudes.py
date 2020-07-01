@@ -14,13 +14,19 @@ obsname = 'lasilla'
 k_ext = [0.1129, 0.2020, 0.4868]
 bands = ['r', 'g', 'u']
 
+# Previously calculated values
+variables_fname = "FOUND_VALUES.json"
+with open(variables_fname, 'r') as f:
+    variables = json.load(f)
+
 
 data = hcam.hlog.Hlog.read(fname)
 # Gets a dict of lists, of all the aperture mags. The first one will be the target, so can be discarded.
 inst_mags = get_instrumental_mags(data, target_coords, obsname, k_ext)
 inst_mags = {bands[int(key)-1]: mags[1:] for key, mags in inst_mags.items()}
 
-print("I got the following instrumental magnitudes:")
+print("The 0th aperture is assumed to be the target, so it'll be discarded now.")
+print("I got the following comaprison instrumental magnitudes:")
 for key, mags in inst_mags.items():
     print("Band: {}".format(key))
     for mag in mags:
