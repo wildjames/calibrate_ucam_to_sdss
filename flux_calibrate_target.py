@@ -256,7 +256,7 @@ for fname in fnames:
     clipped_mean_flux, _, _ = sigma_clipped_stats(target_lightcurves['r'].y)
     axs[2].axhline(clipped_mean_flux, color='magenta')
 
-    axs[0].set_title("Flux calibrated, phase-folded lightcurves")
+    axs[0].set_title("Flux calibrated, phase-folded lightcurves\n{}".format(fname))
     axs[2].set_xlabel("Phase")
     axs[1].set_ylabel("SDSS Flux, mJy")
 
