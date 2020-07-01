@@ -28,9 +28,9 @@ k_ext = {
     'ucam:ntt:z_s': 0.0,
 }
 
-targetband = 'u'
+targetband = 'g'
 diagnostic = 'u-g'
-# diagnostic = 'g-r'
+diagnostic = 'g-r'
 
 if generate_MIST:
     def get_all_mags(teff, logg, ebv):
