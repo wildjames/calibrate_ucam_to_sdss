@@ -74,7 +74,7 @@ if __name__ in "__main__":
     function of u-g. IF YOU CHANGE THAT, CHANGE THIS SCRIPT!!!
     '''
 
-    standard_star_reduction = "/local/sl/backed_up_on_astro3/eclipsing_cvs/LIVE/ASASSN-17jf/REDUCED/ucam/2019_09_27/run007.log"
+    standard_star_reduction = "Quality_Reductions/2019_09_27-run007.log"
     std_name = 'SA 114 548'
 
     # Observed bands in the above reduction.
