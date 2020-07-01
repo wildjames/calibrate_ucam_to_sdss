@@ -328,3 +328,183 @@ Aperture 1 had a clipped mean counts per frame of 49569.12+/-626.25
 
 
 
+------- Getting instrumental magnitude -------
+  I'm correcting for airmass, using the following:
+     Extinction: [0.1129, 0.202, 0.4868] mags/airmass
+        Ra, Dec: 20 29 17.13 -43 40 19.8
+    Observatory: lasilla
+Observatory successfully retrieved from site name
+  For the observations starting at 2019-09-28 01:41:41.915 and ending at 2019-09-28 03:03:58.466...
+   -> Zenith angle starts at 17.990, and ends at 30.743
+   -> Airmass starts at 1.051, ends at 1.164
+Mean airmass: 1.098
+
+Getting the INSTRUMENTAL (electron flux) magnitudes for the log file
+  Ignoring bad data flags: [4]
+List of keys:
+(('ALL_OK', 0), ('NO_FWHM', 1), ('NO_SKY', 2), ('SKY_AT_EDGE', 4), ('TARGET_AT_EDGE', 8), ('TARGET_SATURATED', 16), ('TARGET_NONLINEAR', 32), ('NO_EXTRACTION', 64), ('NO_DATA', 128), ('CLOUDS', 256), ('JUNK', 512), ('BAD_FLAT', 1024), ('BAD_COLUMN', 2048), ('BAD_TIME', 4096), ('ANY_BAD', 8191))
+
+---> Doing CCD 1 <---
+
+Bad data detected!
+The mask will remove 3/614 data points.
+Aperture 1 had a clipped mean counts per frame of 705.40+/-639.35
+  and a mean exposure time of 8.029s
+
+Bad data detected!
+The mask will remove 3/614 data points.
+Aperture 2 had a clipped mean counts per frame of 48860.05+/-710.34
+  and a mean exposure time of 8.029s
+
+Bad data detected!
+The mask will remove 3/614 data points.
+Aperture 3 had a clipped mean counts per frame of 74643.14+/-727.23
+  and a mean exposure time of 8.029s
+
+Bad data detected!
+The mask will remove 3/614 data points.
+Aperture 4 had a clipped mean counts per frame of 78195.94+/-786.55
+  and a mean exposure time of 8.029s
+
+Bad data detected!
+The mask will remove 3/614 data points.
+Aperture 5 had a clipped mean counts per frame of 77558.27+/-720.42
+  and a mean exposure time of 8.029s
+
+Bad data detected!
+The mask will remove 3/614 data points.
+Aperture 6 had a clipped mean counts per frame of 70544.84+/-752.47
+  and a mean exposure time of 8.029s
+
+Bad data detected!
+The mask will remove 3/614 data points.
+Aperture 7 had a clipped mean counts per frame of 44590.81+/-665.55
+  and a mean exposure time of 8.029s
+
+Bad data detected!
+The mask will remove 3/614 data points.
+Aperture 8 had a clipped mean counts per frame of 52919.68+/-628.68
+  and a mean exposure time of 8.029s
+  CCD 1 extinction: 0.124 mags
+  Post-ext correct:
+    Ap 0: -5.049 mags
+    Ap 1: -9.585 mags
+    Ap 2: -10.045 mags
+    Ap 3: -10.095 mags
+    Ap 4: -10.086 mags
+    Ap 5: -9.983 mags
+    Ap 6: -9.485 mags
+    Ap 7: -9.671 mags
+
+
+
+
+---> Doing CCD 2 <---
+
+Bad data detected!
+The mask will remove 3/614 data points.
+Aperture 1 had a clipped mean counts per frame of 2032.05+/-565.68
+  and a mean exposure time of 8.029s
+
+Bad data detected!
+The mask will remove 3/614 data points.
+Aperture 2 had a clipped mean counts per frame of 46482.35+/-569.74
+  and a mean exposure time of 8.029s
+
+Bad data detected!
+The mask will remove 3/614 data points.
+Aperture 3 had a clipped mean counts per frame of 43051.38+/-529.28
+  and a mean exposure time of 8.029s
+
+Bad data detected!
+The mask will remove 3/614 data points.
+Aperture 4 had a clipped mean counts per frame of 60582.25+/-597.96
+  and a mean exposure time of 8.029s
+
+Bad data detected!
+The mask will remove 3/614 data points.
+Aperture 5 had a clipped mean counts per frame of 63883.82+/-674.66
+  and a mean exposure time of 8.029s
+
+Bad data detected!
+The mask will remove 3/614 data points.
+Aperture 6 had a clipped mean counts per frame of 60037.91+/-647.95
+  and a mean exposure time of 8.029s
+
+Bad data detected!
+The mask will remove 3/614 data points.
+Aperture 7 had a clipped mean counts per frame of 44270.69+/-557.04
+  and a mean exposure time of 8.029s
+
+Bad data detected!
+The mask will remove 3/614 data points.
+Aperture 8 had a clipped mean counts per frame of 33956.79+/-481.62
+  and a mean exposure time of 8.029s
+  CCD 2 extinction: 0.222 mags
+  Post-ext correct:
+    Ap 0: -6.244 mags
+    Ap 1: -9.628 mags
+    Ap 2: -9.545 mags
+    Ap 3: -9.916 mags
+    Ap 4: -9.974 mags
+    Ap 5: -9.906 mags
+    Ap 6: -9.575 mags
+    Ap 7: -9.287 mags
+
+
+
+
+---> Doing CCD 3 <---
+
+Bad data detected!
+The mask will remove 2/205 data points.
+Aperture 1 had a clipped mean counts per frame of 743.80+/-391.97
+  and a mean exposure time of 24.136s
+
+Bad data detected!
+The mask will remove 2/205 data points.
+Aperture 2 had a clipped mean counts per frame of 8624.40+/-348.20
+  and a mean exposure time of 24.136s
+
+Bad data detected!
+The mask will remove 2/205 data points.
+Aperture 3 had a clipped mean counts per frame of 2483.18+/-324.54
+  and a mean exposure time of 24.136s
+
+Bad data detected!
+The mask will remove 2/205 data points.
+Aperture 4 had a clipped mean counts per frame of 6872.00+/-320.77
+  and a mean exposure time of 24.136s
+
+Bad data detected!
+The mask will remove 2/205 data points.
+Aperture 5 had a clipped mean counts per frame of 16023.59+/-353.34
+  and a mean exposure time of 24.136s
+
+Bad data detected!
+The mask will remove 2/205 data points.
+Aperture 6 had a clipped mean counts per frame of 10173.03+/-493.42
+  and a mean exposure time of 24.136s
+
+Bad data detected!
+The mask will remove 2/205 data points.
+Aperture 7 had a clipped mean counts per frame of 8913.27+/-441.69
+  and a mean exposure time of 24.136s
+
+Bad data detected!
+The mask will remove 2/205 data points.
+Aperture 8 had a clipped mean counts per frame of 3138.14+/-294.57
+  and a mean exposure time of 24.136s
+  CCD 3 extinction: 0.535 mags
+  Post-ext correct:
+    Ap 0: -4.210 mags
+    Ap 1: -6.915 mags
+    Ap 2: -5.558 mags
+    Ap 3: -6.669 mags
+    Ap 4: -7.589 mags
+    Ap 5: -7.093 mags
+    Ap 6: -6.949 mags
+    Ap 7: -5.815 mags
+
+
+

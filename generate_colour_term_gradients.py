@@ -8,8 +8,8 @@ from pathlib import Path
 from scipy.optimize import minimize
 
 
-generate_koester = True
-generate_MIST = True
+generate_koester = False
+generate_MIST = False
 
 telescope, instrument = 'ntt', 'ucam'
 stimtype = 'abmag'
@@ -28,7 +28,7 @@ k_ext = {
     'ucam:ntt:z_s': 0.0,
 }
 
-targetband = 'r'
+targetband = 'g'
 diagnostic = 'u-g'
 diagnostic = 'g-r'
 
