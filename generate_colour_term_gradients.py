@@ -95,10 +95,13 @@ if generate_MIST:
             mags = get_all_mags(teff, logg, 0.0)
 
             # I'll want these later.
-            mags['g-r'] = mags['sdss:g'] - mags['sdss:r']
             mags['u-g'] = mags['sdss:u'] - mags['sdss:g']
+            mags['g-r'] = mags['sdss:g'] - mags['sdss:r']
+            mags['r-i'] = mags['sdss:r'] - mags['sdss:i']
+            mags['i-z'] = mags['sdss:i'] - mags['sdss:z']
 
-            mags["{0}_s-{0}".format(targetband)] = mags['{}:{}:{}_s'.format(instrument, telescope, targetband)] - mags['sdss:{}'.format(targetband)]
+            for band in ['u', 'g', 'r', 'i', 'z']:
+                mags["{0}_s-{0}".format(targetband)] = mags['{}:{}:{}_s'.format(instrument, telescope, targetband)] - mags['sdss:{}'.format(targetband)]
 
             MIST_df = MIST_df.append(mags, ignore_index=True)
 
