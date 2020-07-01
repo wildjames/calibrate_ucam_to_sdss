@@ -58,7 +58,7 @@ def sdss_mag2flux(mag):
     '''Takes an SDSS magnitude, returns the corresponding flux in [mJy]'''
     alpha = 3631e3
 
-    flux = 10**(-mag/2.5)
+    flux = 10.0**(-mag/2.5)
     flux*= alpha
 
     return flux
