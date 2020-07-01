@@ -53,10 +53,6 @@ def gather_standard_mags(fname, coords, obsname, k_ext, bands):
     the passed list of bands tells me what order the CCDs are in.'''
     inst_mags = get_instrumental_mags(fname, coords, obsname, k_ext)
     inst_mags = {band: inst_mags[str(i+1)] for i, band in enumerate(bands)}
-    #     'r': inst_mags['1'][0],
-    #     'g': inst_mags['2'][0],
-    #     'u': inst_mags['3'][0],
-    # }
     return inst_mags
 
 
