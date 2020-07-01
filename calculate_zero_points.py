@@ -51,7 +51,8 @@ def get_smith_info(starname, tablename):
 def gather_standard_mags(fname, coords, obsname, k_ext, bands):
     '''return the instrumental, above atmosphere, SDSS magnitudes. 
     the passed list of bands tells me what order the CCDs are in.'''
-    inst_mags = get_instrumental_mags(fname, coords, obsname, k_ext)
+    data = hcam.hlog.Hlog.read(fname)
+    inst_mags = get_instrumental_mags(data, coords, obsname, k_ext)
     inst_mags = {band: inst_mags[str(i+1)] for i, band in enumerate(bands)}
     return inst_mags
 
