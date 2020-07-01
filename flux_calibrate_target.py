@@ -50,7 +50,7 @@ with open(variables_fname, 'r') as f:
 #=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=##=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
 #=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=##=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
 
-comparison_df = pd.from_csv(comparison_mags_tablename)
+comparison_df = pd.read_csv(comparison_mags_tablename)
 
 comp_mags = dict(comparison_df[comparison_df['aperture'] == comparison_aperture])
 print("Retrieved the following comparison mags:")
