@@ -3,11 +3,11 @@ from os.path import abspath, join, split
 from time import sleep
 
 import hipercam as hcam
-import numpy as np
 import pandas as pd
 
 from calphot.constructReference import get_instrumental_mags
 
+# Gather some data files
 mydir = split(abspath(__file__))[0]
 # This is the machine-readable version of the smith table. You shouldn't need to fiddle this!
 smith_table_fname = join(mydir, "tables/tab08.dat.txt")
@@ -19,6 +19,7 @@ print(values_fname)
 # First, remember what we've found so far
 with open(values_fname, 'r') as f:
     variables = json.load(f)
+
 
 def get_smith_info(starname, tablename):
     '''Gather the information I care about from the smith data table. 
