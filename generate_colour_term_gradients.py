@@ -1,18 +1,23 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import pysynphot as S
-from ucam_thruput import getref
-import pandas as pd
+import json
 import os
 from pathlib import Path
-from scipy.optimize import minimize
 
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import pysynphot as S
+from scipy.optimize import minimize
+from ucam_thruput import getref
 
 generate_koester = True
 generate_MIST = True
 
 telescope, instrument = 'ntt', 'ucam'
 stimtype = 'abmag'
+
+variables_fname = "FOUND_VALUES.json"
+with open(variables_fname, 'r') as f:
+    variables = json.load(f)
 
 # These are not relevant - leave as zero for all bands
 k_ext = {
@@ -270,3 +275,8 @@ ax.legend()
 plt.tight_layout()
 plt.savefig("figs/{}band.pdf".format(targetband))
 plt.show()
+
+# Save the new value to file
+variables["a{}".format(targetband)] = colterm
+with open(variables_fname, 'w') as f:
+    f.write(json.dumps(variables))
