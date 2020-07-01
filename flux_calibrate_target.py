@@ -264,7 +264,7 @@ for fname in fnames:
 
     date = time.Time(eclTime, format='mjd')
     date = date.strftime("%Y-%m-%d@%Hh%Mm")
-    plt.savefig("figs/{}_{}_{}.calib".format(oname, date, key))
+    plt.savefig("figs/{}_{}.pdf".format(oname, date))
     plt.show()
 
 
