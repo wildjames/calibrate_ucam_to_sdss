@@ -54,9 +54,14 @@ comparison_df = pd.read_csv(comparison_mags_tablename, index_col=0)
 
 print(comparison_df)
 
-comp_mags = comparison_df[comparison_df['aperture'] == comparison_aperture]
-print("Retrieved the following comparison mags:")
+comp_mags = comparison_df[comparison_df['aperture'] == comparison_aperture].to_dict()
+print("Retrieved the following comparison SDSS mags:")
 print(comp_mags)
+print("\n\n\n")
+
+target_mags = comparison_df[comparison_df['aperture'] == 0].to_dict()
+print("Retrieved the following Target SDSS mags:")
+print(target_mags)
 exit()
 
 # Colour terms. a_u is u-g, g and r are g-r.
