@@ -255,7 +255,7 @@ yr = zp + colterm * xr
 
 ax.plot(xr, yr, color='blue', label='Fitted line, colour term: {:.3f}'.format(colterm))
 
-ax.set_ylabel("{}/{} ${0}_s$ - SDSS ${0}$".format(telescope.upper(), instrument.upper(), targetband))
+ax.set_ylabel("{}/{} ${}_s$ - SDSS ${}$".format(telescope.upper(), instrument.upper(), targetband, targetband))
 ax.set_xlabel("SDSS ${}$".format(diagnostic))
 
 
