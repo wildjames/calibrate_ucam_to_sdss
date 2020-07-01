@@ -53,7 +53,7 @@ def gather_standard_mags(fname, coords, obsname, k_ext, bands):
     the passed list of bands tells me what order the CCDs are in.'''
     data = hcam.hlog.Hlog.read(fname)
     inst_mags = get_instrumental_mags(data, coords, obsname, k_ext)
-    inst_mags = {band: inst_mags[str(i+1)] for i, band in enumerate(bands)}
+    inst_mags = {band: inst_mags[str(i+1)][0] for i, band in enumerate(bands)}
     return inst_mags
 
 
