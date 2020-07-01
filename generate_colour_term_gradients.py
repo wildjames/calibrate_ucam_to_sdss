@@ -14,11 +14,6 @@ generate_MIST = True
 telescope, instrument = 'ntt', 'ucam'
 stimtype = 'abmag'
 
-filters = [
-    'u_s', 'g_s', 'r_s', 'i_s', 'z_s', 
-    # 'u', 'g', 'r', 'i', 'z'
-]
-sdss_filters = ['u', 'g', 'r', 'i', 'z']
 # These are not relevant - leave as zero for all bands
 k_ext = {
     'sdss:u': 0.0,
@@ -34,8 +29,8 @@ k_ext = {
 }
 
 targetband = 'u'
-# diagnostic = 'u-g'
-diagnostic = 'g-r'
+diagnostic = 'u-g'
+# diagnostic = 'g-r'
 
 if generate_MIST:
     def get_all_mags(teff, logg, ebv):
@@ -45,6 +40,12 @@ if generate_MIST:
             'logg':logg,
             'ebv': ebv,
         }
+
+        filters = [
+            'u_s', 'g_s', 'r_s', 'i_s', 'z_s', 
+            # 'u', 'g', 'r', 'i', 'z'
+        ]
+        sdss_filters = ['u', 'g', 'r', 'i', 'z']
 
         sp = S.Icat('phoenix', teff, 0.0, logg)
         sp *= S.reddening.Extinction(ebv)
@@ -107,9 +108,9 @@ else:
 
 ################## KOESTER MODELS ##################
 
+logg = '850'
 if generate_koester:
     # Just do one gravity.
-    logg = '850'
     teffs = np.arange(5000, 20001, 250)
 
     # SDSS filters
@@ -210,7 +211,7 @@ def chisq(args):
     chisq = 0.0
     zero_point, colour_term = args
 
-    calc_wd_correction = zero_point + colour_term * koester_df[diagnostic]
+    calc_wd_correction = zero_point + (colour_term * koester_df[diagnostic])
     diff = calc_wd_correction - koester_df['{0}_s-{0}'.format(targetband)]
     chisq += (diff**2).sum()
 
