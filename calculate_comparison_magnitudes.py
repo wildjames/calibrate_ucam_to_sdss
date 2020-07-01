@@ -107,4 +107,15 @@ for ap_index in range(len(mags)):
     sdss_mags['r'].append(r_sdss)
 
 print(sdss_mags)
-print(pd.from_dict(sdss_mags))
+sdss_df = pd.DataFrame()
+for ap_index in range(len(mags)):
+    row = {
+        "aperture": str(ap_index+1),
+        'u': sdss_mags['u'][ap_index],
+        'g': sdss_mags['g'][ap_index],
+        'r': sdss_mags['r'][ap_index],
+    }
+    sdss_df = sdss_df.append(row, ignore_index=True)
+print(sdss_df)
+
+
