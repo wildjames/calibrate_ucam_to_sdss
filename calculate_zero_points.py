@@ -88,6 +88,12 @@ if __name__ in "__main__":
     #=--=#=--=#=--=#=--=#=--=#=--=#=--=#=--=#
     #=--=#=--=#=--=#=--=#=--=#=--=#=--=#=--=#
 
+
+    # Gather data on the standard star
+    smith_mags, smith_coords = get_smith_info(std_name, smith_table_fname)
+    print("{} magnitudes:".format(std_name))
+    print('\n'.join(["{}: {}".format(key, val) for key, val in smith_mags.items()]))
+
     print("I will gather the instrumental magnitudes observed in {}\n\n".format(standard_star_reduction))
     sleep(2)
     inst_mags = gather_standard_mags(standard_star_reduction, smith_coords, obsname, k_ext, bands)
@@ -95,12 +101,6 @@ if __name__ in "__main__":
     print("\n\nI have previously found these values:")
     print('\n'.join(["{}: {}".format(key, val) for key, val in variables.items()]))
     print('\n\n\n')
-
-    # Gather data on the standard star
-    smith_mags, smith_coords = get_smith_info(std_name, smith_table_fname)
-    print("{} magnitudes:".format(std_name))
-    print('\n'.join(["{}: {}".format(key, val) for key, val in smith_mags.items()]))
-
 
     print("\n\nTo calculate the zero points, I use equations of the form:")
     print("g_zp = g_inst,noatmos - g_sdss - (a_g * (g-r)_sdss)")
