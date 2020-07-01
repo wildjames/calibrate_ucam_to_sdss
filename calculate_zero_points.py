@@ -100,7 +100,7 @@ if __name__ in "__main__":
     print("{} magnitudes:".format(std_name))
     print('\n'.join(["{}: {}".format(key, val) for key, val in smith_mags.items()]))
 
-    inst_mags = gather_standard_mags(standard_star_reduction, coords, obsname, k_ext, bands)
+    inst_mags = gather_standard_mags(standard_star_reduction, smith_coords, obsname, k_ext, bands)
 
     zero_points = {}
     for band in bands:
