@@ -70,7 +70,7 @@ for ap_index in range(len(mags)):
 
     # Due to the interdependancy of the equations, all bands must be done simultaneously.
     iteration = 0
-    while du + dg + dr > 0.0001 or iteration < 10:
+    while du + dg + dr > 0.0001:
         iteration += 1
 
         # u calculation
