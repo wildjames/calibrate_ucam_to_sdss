@@ -259,6 +259,10 @@ for fname in fnames:
     axs[0].set_title("Flux calibrated, phase-folded lightcurves\n{}".format(fname))
     axs[2].set_xlabel("Phase")
     axs[1].set_ylabel("SDSS Flux, mJy")
+    
+    axs[0].legend()
+    axs[1].legend()
+    axs[2].legend()
 
     plt.show()
 
