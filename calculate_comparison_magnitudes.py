@@ -59,9 +59,9 @@ for ap_index in range(len(mags)):
     print("u: {:.3f}".format(u_inst))
 
     # First iteration uses no colour term, so set the sdss mags as equal to the instrumental ones.
-    u_sdss = u_inst + u_zp
-    g_sdss = g_inst + g_zp
-    r_sdss = r_inst + r_zp
+    u_sdss = u_inst - u_zp
+    g_sdss = g_inst - g_zp
+    r_sdss = r_inst - r_zp
 
     du = 99
     dg = 99
@@ -69,15 +69,15 @@ for ap_index in range(len(mags)):
 
     # Due to the interdependancy of the equations, all bands must be done simultaneously.
     iteration = 0
-    while du + dg + dr > 0.0001:
+    while du + dg + dr > 0.0001 or iteration < 10:
         iteration += 1
 
         # u calculation
-        u_sdss_new = u_inst + u_zp + a_u*(u_sdss - g_sdss)
+        u_sdss_new = u_inst - u_zp - a_u*(u_sdss - g_sdss)
         # g calculation
-        g_sdss_new = g_inst + g_zp + a_g*(g_sdss - r_sdss)
+        g_sdss_new = g_inst - g_zp - a_g*(g_sdss - r_sdss)
         # r calculation
-        r_sdss_new = r_inst + r_zp + a_r*(g_sdss - r_sdss)
+        r_sdss_new = r_inst - r_zp - a_r*(g_sdss - r_sdss)
 
         du = abs(u_sdss - u_sdss_new)
         dg = abs(g_sdss - g_sdss_new)
