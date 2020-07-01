@@ -101,7 +101,7 @@ if generate_MIST:
             mags['i-z'] = mags['sdss:i'] - mags['sdss:z']
 
             for band in ['u', 'g', 'r', 'i', 'z']:
-                mags["{0}_s-{0}".format(targetband)] = mags['{}:{}:{}_s'.format(instrument, telescope, targetband)] - mags['sdss:{}'.format(targetband)]
+                mags["{0}_s-{0}".format(band)] = mags['{}:{}:{}_s'.format(instrument, telescope, band)] - mags['sdss:{}'.format(band)]
 
             MIST_df = MIST_df.append(mags, ignore_index=True)
 
