@@ -28,7 +28,7 @@ k_ext = {
     'ucam:ntt:z_s': 0.0,
 }
 
-targetband = 'g'
+targetband = 'r'
 diagnostic = 'u-g'
 diagnostic = 'g-r'
 
