@@ -1,6 +1,7 @@
 import hipercam as hcam
 import json
 from calphot.constructReference import get_instrumental_mags
+import pandas as pd
 
 
 '''
@@ -102,3 +103,8 @@ for ap_index in range(len(mags)):
     print("\n\n\n\n")
 
     sdss_mags['u'].append(u_sdss)
+    sdss_mags['g'].append(g_sdss)
+    sdss_mags['r'].append(r_sdss)
+
+print(sdss_mags)
+print(pd.from_dict(sdss_mags))
