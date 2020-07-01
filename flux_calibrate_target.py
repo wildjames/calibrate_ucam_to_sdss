@@ -261,19 +261,16 @@ for fname in fnames:
     axs[1].set_ylabel("SDSS Flux, mJy")
     
     axs[0].legend()
-    axs[1].legend()
-    axs[2].legend()
 
+    date = time.Time(eclTime, format='mjd')
+    date = date.strftime("%Y-%m-%d@%Hh%Mm")
+    plt.savefig("figs/{}_{}_{}.calib".format(oname, date, key))
     plt.show()
 
 
     # Save the resulting lightcurves
     for key, lc in target_lightcurves.items():
-        date = time.Time(eclTime, format='mjd')
-        date = date.strftime("%Y-%m-%d@%Hh%Mm")
-
-        filename = oname
-        filename = "{}_{}_{}.calib".format(filename, date, key)
+        filename = "{}_{}_{}.calib".format(oname, date, key)
         filename = join(lc_dir, filename)
 
         with open(filename, 'w') as f:
