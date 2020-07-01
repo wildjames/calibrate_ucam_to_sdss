@@ -98,7 +98,7 @@ if generate_MIST:
             mags['g-r'] = mags['sdss:g'] - mags['sdss:r']
             mags['u-g'] = mags['sdss:u'] - mags['sdss:g']
 
-            mags["{0}_s-{0}".format(targetband)] = mags['ucam:ntt:{}_s'.format(targetband)] - mags['sdss:{}'.format(targetband)]
+            mags["{0}_s-{0}".format(targetband)] = mags['{}:{}:{}_s'.format(instrument, telescope, targetband)] - mags['sdss:{}'.format(targetband)]
 
             MIST_df = MIST_df.append(mags, ignore_index=True)
 
@@ -217,7 +217,7 @@ def chisq(args):
 
     color = MIST_df[diagnostic]
     calc_ms_correction = zero_point + (colour_term * color)
-    diff = calc_ms_correction - (MIST_df['ucam:ntt:{0}_s'.format(targetband)] - MIST_df['sdss:{0}'.format(targetband)])
+    diff = calc_ms_correction - (MIST_df['{}:{}:{}_s'.format(instrument, telescope, targetband)] - MIST_df['sdss:{0}'.format(targetband)])
     chisq += (diff**2).sum()
 
     return chisq
@@ -252,7 +252,7 @@ yr = zp + colterm * xr
 
 ax.plot(xr, yr, color='blue', label='Fitted line, colour term: {:.3f}'.format(colterm))
 
-ax.set_ylabel("UCAM/NTT ${0}_s$ - SDSS ${0}$".format(targetband))
+ax.set_ylabel("{}/{} ${0}_s$ - SDSS ${0}$".format(telescope.upper(), instrument.upper(), targetband))
 ax.set_xlabel("SDSS ${}$".format(diagnostic))
 
 
