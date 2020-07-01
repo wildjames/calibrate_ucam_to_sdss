@@ -1,12 +1,13 @@
+import json
 from os import mkdir
 from os.path import isdir, join
 from pprint import pprint
 from time import sleep
-import json
 
 import hipercam as hcam
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from astropy import coordinates as coord
 from astropy import time
 from astropy import units as u
@@ -14,7 +15,6 @@ from astropy.stats import sigma_clipped_stats
 
 from calphot.constructReference import get_instrumental_mags
 from calphot.getEclipseTimes import tcorrect
-
 
 #=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
 ########## USER DEFINED INPUTS ##########
@@ -94,4 +94,3 @@ print("\n\nUsing the following comparison SDSS magnitudes (AP{}): ".format(compa
 pprint(comp_mags)
 print("I calculated the following fluxes, in mJy: ")
 pprint(comp_flx)
-
