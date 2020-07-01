@@ -4,7 +4,7 @@ from os.path import isdir, join
 from pprint import pprint
 from time import sleep
 
-import hipercam as hcam
+# import hipercam as hcam
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -13,8 +13,8 @@ from astropy import time
 from astropy import units as u
 from astropy.stats import sigma_clipped_stats
 
-from calphot.constructReference import get_instrumental_mags
-from calphot.getEclipseTimes import tcorrect
+# from calphot.constructReference import get_instrumental_mags
+# from calphot.getEclipseTimes import tcorrect
 
 #=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
 ########## USER DEFINED INPUTS ##########
@@ -50,11 +50,14 @@ with open(variables_fname, 'r') as f:
 #=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=##=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
 #=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=##=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
 
-comparison_df = pd.read_csv(comparison_mags_tablename)
+comparison_df = pd.read_csv(comparison_mags_tablename, index_col=0)
 
-comp_mags = dict(comparison_df[comparison_df['aperture'] == comparison_aperture])
+print(comparison_df)
+
+comp_mags = comparison_df[comparison_df['aperture'] == comparison_aperture]
 print("Retrieved the following comparison mags:")
 print(comp_mags)
+exit()
 
 # Colour terms. a_u is u-g, g and r are g-r.
 a_u = variables['au']
@@ -66,8 +69,6 @@ u_zp = variables['u_zp']
 g_zp = variables['g_zp']
 r_zp = variables['r_zp']
 
-
-
 def sdss_mag2flux(mag):
     '''Takes an SDSS magnitude, returns the corresponding flux in [mJy]'''
     alpha = 3631e3
@@ -76,8 +77,6 @@ def sdss_mag2flux(mag):
     flux*= alpha
 
     return flux
-
-
 
 
 data = hcam.hlog.Hlog.read(fname)

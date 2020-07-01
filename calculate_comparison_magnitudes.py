@@ -24,10 +24,9 @@ with open(variables_fname, 'r') as f:
 data = hcam.hlog.Hlog.read(fname)
 # Gets a dict of lists, of all the aperture mags. The first one will be the target, so can be discarded.
 inst_mags = get_instrumental_mags(data, target_coords, obsname, k_ext)
-inst_mags = {bands[int(key)-1]: mags[1:] for key, mags in inst_mags.items()}
+inst_mags = {bands[int(key)-1]: mags for key, mags in inst_mags.items()}
 
-print("The 0th aperture is assumed to be the target, so it'll be discarded now.")
-print("I got the following comaprison instrumental magnitudes:")
+print("I got the following comparison instrumental magnitudes:")
 for key, mags in inst_mags.items():
     print("Band: {}".format(key))
     for mag in mags:
