@@ -2,6 +2,7 @@ from os import mkdir
 from os.path import isdir, join
 from pprint import pprint
 from time import sleep
+import json
 
 import hipercam as hcam
 import matplotlib.pyplot as plt
