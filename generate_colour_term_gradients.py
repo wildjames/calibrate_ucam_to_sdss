@@ -8,8 +8,8 @@ from pathlib import Path
 from scipy.optimize import minimize
 
 
-generate_koester = False
-generate_MIST = False
+generate_koester = True
+generate_MIST = True
 
 telescope, instrument = 'ntt', 'ucam'
 stimtype = 'abmag'

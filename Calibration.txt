@@ -1,0 +1,330 @@
+------- Getting instrumental magnitude -------
+  I'm correcting for airmass, using the following:
+     Extinction: [0.1129, 0.202, 0.4868] mags/airmass
+        Ra, Dec: 22:41:36.83 22:41:36.83
+    Observatory: lasilla
+Observatory successfully retrieved from site name
+------- Getting instrumental magnitude -------
+  I'm correcting for airmass, using the following:
+     Extinction: [0.1129, 0.202, 0.4868] mags/airmass
+        Ra, Dec: 22:41:36.83 22:41:36.83
+    Observatory: lasilla
+Observatory successfully retrieved from site name
+  For the observations starting at 2019-09-27 23:45:34.272 and ending at 2019-09-27 23:50:43.001...
+   -> Zenith angle starts at 69.912, and ends at 69.091
+   -> Airmass starts at 2.912, ends at 2.802
+Mean airmass: 2.856
+
+Getting the INSTRUMENTAL (electron flux) magnitudes for the log file
+  Ignoring bad data flags: [4]
+List of keys:
+(('ALL_OK', 0), ('NO_FWHM', 1), ('NO_SKY', 2), ('SKY_AT_EDGE', 4), ('TARGET_AT_EDGE', 8), ('TARGET_SATURATED', 16), ('TARGET_NONLINEAR', 32), ('NO_EXTRACTION', 64), ('NO_DATA', 128), ('CLOUDS', 256), ('JUNK', 512), ('BAD_FLAT', 1024), ('BAD_COLUMN', 2048), ('BAD_TIME', 4096), ('ANY_BAD', 8191))
+
+---> Doing CCD 1 <---
+
+Bad data detected!
+The mask will remove 6/36 data points.
+Aperture 1 had a clipped mean counts per frame of 1766452.50+/-12560.39
+  and a mean exposure time of 3.002s
+  CCD 1 extinction: 0.322 mags
+  Post-ext correct:
+    Ap 0: -14.747 mags
+
+
+
+
+---> Doing CCD 2 <---
+
+Bad data detected!
+The mask will remove 2/36 data points.
+Aperture 1 had a clipped mean counts per frame of 788493.81+/-5834.87
+  and a mean exposure time of 3.002s
+  CCD 2 extinction: 0.577 mags
+  Post-ext correct:
+    Ap 0: -14.125 mags
+
+
+
+
+---> Doing CCD 3 <---
+
+Bad data detected!
+The mask will remove 2/13 data points.
+Aperture 1 had a clipped mean counts per frame of 49569.12+/-626.25
+  and a mean exposure time of 20.444s
+  CCD 3 extinction: 1.390 mags
+  Post-ext correct:
+    Ap 0: -9.842 mags
+
+
+
+------- Getting instrumental magnitude -------
+  I'm correcting for airmass, using the following:
+     Extinction: [0.1129, 0.202, 0.4868] mags/airmass
+        Ra, Dec: 22:41:36.83 22:41:36.83
+    Observatory: lasilla
+Observatory successfully retrieved from site name
+  For the observations starting at 2019-09-27 23:45:34.272 and ending at 2019-09-27 23:50:43.001...
+   -> Zenith angle starts at 69.912, and ends at 69.091
+   -> Airmass starts at 2.912, ends at 2.802
+Mean airmass: 2.856
+
+Getting the INSTRUMENTAL (electron flux) magnitudes for the log file
+  Ignoring bad data flags: [4]
+List of keys:
+(('ALL_OK', 0), ('NO_FWHM', 1), ('NO_SKY', 2), ('SKY_AT_EDGE', 4), ('TARGET_AT_EDGE', 8), ('TARGET_SATURATED', 16), ('TARGET_NONLINEAR', 32), ('NO_EXTRACTION', 64), ('NO_DATA', 128), ('CLOUDS', 256), ('JUNK', 512), ('BAD_FLAT', 1024), ('BAD_COLUMN', 2048), ('BAD_TIME', 4096), ('ANY_BAD', 8191))
+
+---> Doing CCD 1 <---
+
+Bad data detected!
+The mask will remove 6/36 data points.
+Aperture 1 had a clipped mean counts per frame of 1766452.50+/-12560.39
+  and a mean exposure time of 3.002s
+  CCD 1 extinction: 0.322 mags
+  Post-ext correct:
+    Ap 0: -14.747 mags
+
+
+
+
+---> Doing CCD 2 <---
+
+Bad data detected!
+The mask will remove 2/36 data points.
+Aperture 1 had a clipped mean counts per frame of 788493.81+/-5834.87
+  and a mean exposure time of 3.002s
+  CCD 2 extinction: 0.577 mags
+  Post-ext correct:
+    Ap 0: -14.125 mags
+
+
+
+
+---> Doing CCD 3 <---
+
+Bad data detected!
+The mask will remove 2/13 data points.
+Aperture 1 had a clipped mean counts per frame of 49569.12+/-626.25
+  and a mean exposure time of 20.444s
+  CCD 3 extinction: 1.390 mags
+  Post-ext correct:
+    Ap 0: -9.842 mags
+
+
+
+------- Getting instrumental magnitude -------
+  I'm correcting for airmass, using the following:
+     Extinction: [0.1129, 0.202, 0.4868] mags/airmass
+        Ra, Dec: 22:41:36.83 22:41:36.83
+    Observatory: lasilla
+Observatory successfully retrieved from site name
+  For the observations starting at 2019-09-27 23:45:34.272 and ending at 2019-09-27 23:50:43.001...
+   -> Zenith angle starts at 69.912, and ends at 69.091
+   -> Airmass starts at 2.912, ends at 2.802
+Mean airmass: 2.856
+
+Getting the INSTRUMENTAL (electron flux) magnitudes for the log file
+  Ignoring bad data flags: [4]
+List of keys:
+(('ALL_OK', 0), ('NO_FWHM', 1), ('NO_SKY', 2), ('SKY_AT_EDGE', 4), ('TARGET_AT_EDGE', 8), ('TARGET_SATURATED', 16), ('TARGET_NONLINEAR', 32), ('NO_EXTRACTION', 64), ('NO_DATA', 128), ('CLOUDS', 256), ('JUNK', 512), ('BAD_FLAT', 1024), ('BAD_COLUMN', 2048), ('BAD_TIME', 4096), ('ANY_BAD', 8191))
+
+---> Doing CCD 1 <---
+
+Bad data detected!
+The mask will remove 6/36 data points.
+Aperture 1 had a clipped mean counts per frame of 1766452.50+/-12560.39
+  and a mean exposure time of 3.002s
+  CCD 1 extinction: 0.322 mags
+  Post-ext correct:
+    Ap 0: -14.747 mags
+
+
+
+
+---> Doing CCD 2 <---
+
+Bad data detected!
+The mask will remove 2/36 data points.
+Aperture 1 had a clipped mean counts per frame of 788493.81+/-5834.87
+  and a mean exposure time of 3.002s
+  CCD 2 extinction: 0.577 mags
+  Post-ext correct:
+    Ap 0: -14.125 mags
+
+
+
+
+---> Doing CCD 3 <---
+
+Bad data detected!
+The mask will remove 2/13 data points.
+Aperture 1 had a clipped mean counts per frame of 49569.12+/-626.25
+  and a mean exposure time of 20.444s
+  CCD 3 extinction: 1.390 mags
+  Post-ext correct:
+    Ap 0: -9.842 mags
+
+
+
+------- Getting instrumental magnitude -------
+  I'm correcting for airmass, using the following:
+     Extinction: [0.1129, 0.202, 0.4868] mags/airmass
+        Ra, Dec: 22:41:36.83 22:41:36.83
+    Observatory: lasilla
+Observatory successfully retrieved from site name
+  For the observations starting at 2019-09-27 23:45:34.272 and ending at 2019-09-27 23:50:43.001...
+   -> Zenith angle starts at 69.912, and ends at 69.091
+   -> Airmass starts at 2.912, ends at 2.802
+Mean airmass: 2.856
+
+Getting the INSTRUMENTAL (electron flux) magnitudes for the log file
+  Ignoring bad data flags: [4]
+List of keys:
+(('ALL_OK', 0), ('NO_FWHM', 1), ('NO_SKY', 2), ('SKY_AT_EDGE', 4), ('TARGET_AT_EDGE', 8), ('TARGET_SATURATED', 16), ('TARGET_NONLINEAR', 32), ('NO_EXTRACTION', 64), ('NO_DATA', 128), ('CLOUDS', 256), ('JUNK', 512), ('BAD_FLAT', 1024), ('BAD_COLUMN', 2048), ('BAD_TIME', 4096), ('ANY_BAD', 8191))
+
+---> Doing CCD 1 <---
+
+Bad data detected!
+The mask will remove 6/36 data points.
+Aperture 1 had a clipped mean counts per frame of 1766452.50+/-12560.39
+  and a mean exposure time of 3.002s
+  CCD 1 extinction: 0.322 mags
+  Post-ext correct:
+    Ap 0: -14.747 mags
+
+
+
+
+---> Doing CCD 2 <---
+
+Bad data detected!
+The mask will remove 2/36 data points.
+Aperture 1 had a clipped mean counts per frame of 788493.81+/-5834.87
+  and a mean exposure time of 3.002s
+  CCD 2 extinction: 0.577 mags
+  Post-ext correct:
+    Ap 0: -14.125 mags
+
+
+
+
+---> Doing CCD 3 <---
+
+Bad data detected!
+The mask will remove 2/13 data points.
+Aperture 1 had a clipped mean counts per frame of 49569.12+/-626.25
+  and a mean exposure time of 20.444s
+  CCD 3 extinction: 1.390 mags
+  Post-ext correct:
+    Ap 0: -9.842 mags
+
+
+
+------- Getting instrumental magnitude -------
+  I'm correcting for airmass, using the following:
+     Extinction: [0.1129, 0.202, 0.4868] mags/airmass
+        Ra, Dec: 22:41:36.83 22:41:36.83
+    Observatory: lasilla
+Observatory successfully retrieved from site name
+  For the observations starting at 2019-09-27 23:45:34.272 and ending at 2019-09-27 23:50:43.001...
+   -> Zenith angle starts at 69.912, and ends at 69.091
+   -> Airmass starts at 2.912, ends at 2.802
+Mean airmass: 2.856
+
+Getting the INSTRUMENTAL (electron flux) magnitudes for the log file
+  Ignoring bad data flags: [4]
+List of keys:
+(('ALL_OK', 0), ('NO_FWHM', 1), ('NO_SKY', 2), ('SKY_AT_EDGE', 4), ('TARGET_AT_EDGE', 8), ('TARGET_SATURATED', 16), ('TARGET_NONLINEAR', 32), ('NO_EXTRACTION', 64), ('NO_DATA', 128), ('CLOUDS', 256), ('JUNK', 512), ('BAD_FLAT', 1024), ('BAD_COLUMN', 2048), ('BAD_TIME', 4096), ('ANY_BAD', 8191))
+
+---> Doing CCD 1 <---
+
+Bad data detected!
+The mask will remove 6/36 data points.
+Aperture 1 had a clipped mean counts per frame of 1766452.50+/-12560.39
+  and a mean exposure time of 3.002s
+  CCD 1 extinction: 0.322 mags
+  Post-ext correct:
+    Ap 0: -14.747 mags
+
+
+
+
+---> Doing CCD 2 <---
+
+Bad data detected!
+The mask will remove 2/36 data points.
+Aperture 1 had a clipped mean counts per frame of 788493.81+/-5834.87
+  and a mean exposure time of 3.002s
+  CCD 2 extinction: 0.577 mags
+  Post-ext correct:
+    Ap 0: -14.125 mags
+
+
+
+
+---> Doing CCD 3 <---
+
+Bad data detected!
+The mask will remove 2/13 data points.
+Aperture 1 had a clipped mean counts per frame of 49569.12+/-626.25
+  and a mean exposure time of 20.444s
+  CCD 3 extinction: 1.390 mags
+  Post-ext correct:
+    Ap 0: -9.842 mags
+
+
+
+------- Getting instrumental magnitude -------
+  I'm correcting for airmass, using the following:
+     Extinction: [0.1129, 0.202, 0.4868] mags/airmass
+        Ra, Dec: 22:41:36.83 22:41:36.83
+    Observatory: lasilla
+Observatory successfully retrieved from site name
+  For the observations starting at 2019-09-27 23:45:34.272 and ending at 2019-09-27 23:50:43.001...
+   -> Zenith angle starts at 69.912, and ends at 69.091
+   -> Airmass starts at 2.912, ends at 2.802
+Mean airmass: 2.856
+
+Getting the INSTRUMENTAL (electron flux) magnitudes for the log file
+  Ignoring bad data flags: [4]
+List of keys:
+(('ALL_OK', 0), ('NO_FWHM', 1), ('NO_SKY', 2), ('SKY_AT_EDGE', 4), ('TARGET_AT_EDGE', 8), ('TARGET_SATURATED', 16), ('TARGET_NONLINEAR', 32), ('NO_EXTRACTION', 64), ('NO_DATA', 128), ('CLOUDS', 256), ('JUNK', 512), ('BAD_FLAT', 1024), ('BAD_COLUMN', 2048), ('BAD_TIME', 4096), ('ANY_BAD', 8191))
+
+---> Doing CCD 1 <---
+
+Bad data detected!
+The mask will remove 6/36 data points.
+Aperture 1 had a clipped mean counts per frame of 1766452.50+/-12560.39
+  and a mean exposure time of 3.002s
+  CCD 1 extinction: 0.322 mags
+  Post-ext correct:
+    Ap 0: -14.747 mags
+
+
+
+
+---> Doing CCD 2 <---
+
+Bad data detected!
+The mask will remove 2/36 data points.
+Aperture 1 had a clipped mean counts per frame of 788493.81+/-5834.87
+  and a mean exposure time of 3.002s
+  CCD 2 extinction: 0.577 mags
+  Post-ext correct:
+    Ap 0: -14.125 mags
+
+
+
+
+---> Doing CCD 3 <---
+
+Bad data detected!
+The mask will remove 2/13 data points.
+Aperture 1 had a clipped mean counts per frame of 49569.12+/-626.25
+  and a mean exposure time of 20.444s
+  CCD 3 extinction: 1.390 mags
+  Post-ext correct:
+    Ap 0: -9.842 mags
+
+
+
