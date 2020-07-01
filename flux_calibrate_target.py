@@ -86,8 +86,9 @@ r_zp = variables['r_zp']
 comparison_df = pd.read_csv(comparison_mags_tablename, index_col=0)
 
 comp_mags = {
-    band: comparison_df[band][comparison_aperture] for band in bands
+    band: comparison_df[band][int(comparison_aperture)] for band in bands
 }
+print(comparison_df)
 print("Retrieved the following comparison SDSS mags:")
 print(comp_mags)
 print()
