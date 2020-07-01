@@ -1,9 +1,10 @@
 import json
+from os.path import abspath, join, split
+from time import sleep
 
 import hipercam as hcam
 import numpy as np
 import pandas as pd
-from os.path import abspath, split, join
 
 from calphot.constructReference import get_instrumental_mags
 
@@ -87,8 +88,11 @@ if __name__ in "__main__":
     #=--=#=--=#=--=#=--=#=--=#=--=#=--=#=--=#
     #=--=#=--=#=--=#=--=#=--=#=--=#=--=#=--=#
 
+    print("I will gather the instrumental magnitudes observed in {}\n\n".format(standard_star_reduction))
+    sleep(2)
+    inst_mags = gather_standard_mags(standard_star_reduction, smith_coords, obsname, k_ext, bands)
 
-    print("I have previously found these values:")
+    print("\n\nI have previously found these values:")
     print('\n'.join(["{}: {}".format(key, val) for key, val in variables.items()]))
     print('\n\n\n')
 
@@ -97,21 +101,27 @@ if __name__ in "__main__":
     print("{} magnitudes:".format(std_name))
     print('\n'.join(["{}: {}".format(key, val) for key, val in smith_mags.items()]))
 
-    inst_mags = gather_standard_mags(standard_star_reduction, smith_coords, obsname, k_ext, bands)
 
+    print("\n\nTo calculate the zero points, I use equations of the form:")
+    print("g_zp = g_inst,noatmos - g_sdss - (a_g * (g-r)_sdss)")
     zero_points = {}
     for band in bands:
         colour_term = variables["a{}".format(band)]
 
+        print("\n{}_zp".format(band))
         if 'u' in band:
+            print("  using u-g")
             colour_term *= smith_mags['u'] - smith_mags['g']
         else:
+            print("  using g-r")
             colour_term *= smith_mags['g'] - smith_mags['r']
 
-        zero_points[band] = inst_mags[band] - smith_mags[band]
+        print("Colour term: {:.3f}".format(colour_term))
+        zero_points[band] = inst_mags[band] - smith_mags[band] - colour_term
         variables["{}_zp".format(band)] = zero_points[band]
+        print("{}_zp: {:.3f}".format(band, zero_points[band]))
 
-    print("I calculated the zero points, accounting for airmass in the target reduction and the bandpass differences between UCAM and SDSS, as:")
+    print("\n\nI calculated the zero points, accounting for airmass in the target reduction and the bandpass differences between UCAM and SDSS, as:")
     print('\n'.join(["{}: {}".format(key, val) for key, val in zero_points.items()]))
 
     with open(values_fname, 'w') as f:
