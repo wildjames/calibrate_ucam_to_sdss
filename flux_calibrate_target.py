@@ -129,7 +129,8 @@ comp_flx = {key: sdss_mag2flux(comp_mags[key]) for key in comp_mags.keys()}
 print("\n\nI calculated the following fluxes, in mJy: ")
 print(comp_flx)
 
-# In order to translate the GPS-stamped earth arrival times of the data into Barycentric MJD times, I need an astropy skycoord object.
+# In order to translate the GPS-stamped earth arrival times of the 
+# data into Barycentric MJD times, I need an astropy skycoord object.
 star_loc = coord.SkyCoord(
     target_coords,
     unit=(u.hourangle, u.deg), frame='icrs'
