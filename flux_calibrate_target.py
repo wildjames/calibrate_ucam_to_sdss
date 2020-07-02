@@ -44,7 +44,7 @@ obsname = 'lasilla'
 bands = ['r', 'g', 'u']
 
 # Comparison stars data
-comparison_aperture = '5'
+comparison_aperture = '2'
 comparison_mags_tablename = 'tables/comparison_star_sdss_mags.csv'
 
 # Previously calculated values

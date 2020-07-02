@@ -37,7 +37,7 @@ def get_smith_info(starname, tablename):
     smith_table = pd.read_fwf(tablename)
     std_data = smith_table.loc[smith_table['StarName']==starname]
 
-    print("Grabbing the magnitudes of {} from the smith table at {}".format(starname, tablename))
+    print("\n\nGrabbing the magnitudes of {} from the smith table at {}".format(starname, tablename))
     # We gotta build it by hand
     gathered_mags = {}
     gathered_mags['r'] = std_data["r'"].values[0]
