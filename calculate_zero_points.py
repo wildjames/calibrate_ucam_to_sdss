@@ -118,7 +118,7 @@ if __name__ in "__main__":
             colour_term *= smith_mags['g'] - smith_mags['r']
 
         print("Colour term: {:.3f}".format(colour_term))
-        zero_points[band] = inst_mags[band] - smith_mags[band] - colour_term
+        zero_points[band] = smith_mags[band] - inst_mags[band] - colour_term
         variables["{}_zp".format(band)] = zero_points[band]
         print("{}_zp: {:.3f}".format(band, zero_points[band]))
 
