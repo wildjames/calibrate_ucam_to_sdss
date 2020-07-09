@@ -129,7 +129,7 @@ if generate_koester:
     # Lets store it all in a pandas dataframe.
     INFO = ['Teff', 'logg']
     SDSS_COLOURS = ['u-g', 'g-r', 'r-i', 'i-z']
-    CORRECTIONS = ["{}-{}".format(a,b) for a,b in zip(cam_filters, sdss_filters)]
+    CORRECTIONS = ["{}-{}".format(a,b) for a,b in zip(sdss_filters, cam_filters)]
 
     COLNAMES = INFO + SDSS_COLOURS + CORRECTIONS
     koester_df = pd.DataFrame(columns=COLNAMES)
