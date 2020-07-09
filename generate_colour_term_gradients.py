@@ -201,6 +201,7 @@ if generate_koester:
             correction_mag = simulated_mags[f1] - simulated_mags[f2]
 
             row[colour] = correction_mag
+            print("made the koester colour {}".format(colour))
 
         # Update the table. Apply a colour cut on g-r
         koester_df = koester_df.append(row, ignore_index=True, sort=True)
