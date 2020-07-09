@@ -9,7 +9,7 @@ import pysynphot as S
 from scipy.optimize import minimize
 from ucam_thruput import getref
 
-generate_koester = False
+generate_koester = True
 generate_MIST = False
 
 telescope, instrument = 'ntt', 'ucam'
@@ -201,7 +201,6 @@ if generate_koester:
             correction_mag = simulated_mags[f1] - simulated_mags[f2]
 
             row[colour] = correction_mag
-            print("made the koester colour {}".format(colour))
 
         # Update the table. Apply a colour cut on g-r
         koester_df = koester_df.append(row, ignore_index=True, sort=True)
