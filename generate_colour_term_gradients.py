@@ -9,7 +9,7 @@ import pysynphot as S
 from scipy.optimize import minimize
 from ucam_thruput import getref
 
-generate_koester = False
+generate_koester = True
 generate_MIST = False
 
 telescope, instrument = 'ntt', 'ucam'
@@ -240,6 +240,8 @@ print(soln)
 
 
 fig, ax = plt.subplots(figsize=(10, 5))
+
+MIST_df['{0}-{0}_s'.format(targetband)] = MIST_df['sdss:{0}'.format(targetband)] - MIST_df['{}:{}:{}_s'.format(instrument, telescope, targetband)]
 
 MIST_df.plot.scatter(
     diagnostic, '{0}-{0}_s'.format(targetband),
