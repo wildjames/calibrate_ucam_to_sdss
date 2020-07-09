@@ -85,6 +85,7 @@ r_zp = variables['r_zp']
 # Gather the aperture magnitudes. Despite the name, this DOES contain the target aperture, too!
 comparison_df = pd.read_csv(comparison_mags_tablename, index_col=0)
 
+# TODO: you can do this better...
 comp_mags = {
     band: comparison_df[band][int(comparison_aperture)-1] for band in bands
 }
@@ -109,9 +110,9 @@ print(target_mags)
 # This factor will be close to constant across the lightcurve, so I'm 
 # calculating it based on the average magnitudes of the star. These 
 # will be sigma-clipped means! 
-Ku = 0.4 * a_u * ((target_mags['u'] - target_mags['g']) - (comp_mags['u'] - comp_mags['g']))
-Kg = 0.4 * a_g * ((target_mags['g'] - target_mags['r']) - (comp_mags['g'] - comp_mags['r']))
-Kr = 0.4 * a_r * ((target_mags['g'] - target_mags['r']) - (comp_mags['g'] - comp_mags['r']))
+Ku = -0.4 * a_u * ((target_mags['u'] - target_mags['g']) - (comp_mags['u'] - comp_mags['g']))
+Kg = -0.4 * a_g * ((target_mags['g'] - target_mags['r']) - (comp_mags['g'] - comp_mags['r']))
+Kr = -0.4 * a_r * ((target_mags['g'] - target_mags['r']) - (comp_mags['g'] - comp_mags['r']))
 
 Ku = np.power(10.0, Ku)
 Kg = np.power(10.0, Kg)
