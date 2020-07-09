@@ -37,56 +37,56 @@ targetband = 'g'
 diagnostic = 'u-g'
 diagnostic = 'g-r'
 
+def get_phoenix_mags(teff, logg, ebv):
+    '''Folds a phoenix model through the SDSS lightpath, 
+    and the ULTRACAM lightpath. Returns all the abmags, as surface magnitudes.'''
+    row = {
+        'teff': teff, 
+        'logg':logg,
+        'ebv': ebv,
+    }
+
+    filters = [
+        'u_s', 'g_s', 'r_s', 'i_s', 'z_s', 
+        # 'u', 'g', 'r', 'i', 'z'
+    ]
+    sdss_filters = ['u', 'g', 'r', 'i', 'z']
+
+    sp = S.Icat('phoenix', teff, 0.0, logg)
+    sp *= S.reddening.Extinction(ebv)
+
+    # Get the *CAM telescope info
+    S.setref(**getref(telescope))
+
+    #TODO: Check this value
+    airmass = 1.3
+    for filt in filters:
+        bp = S.ObsBandpass("{},{},{}".format(telescope,instrument,filt))
+        spec = S.Observation(sp, bp, force='taper')
+        mag = spec.effstim(stimtype)
+        mag -= k_ext['{}:{}:{}'.format(instrument, telescope, filt)] * airmass
+
+        row['{}:{}:{}'.format(instrument, telescope, filt)] = mag
+
+    # Unset the *CAM thruput stuff
+    S.setref(comptable=None, graphtable=None)  # leave the telescope area as it was
+    # S.setref(area=None)  # reset the telescope area as well?
+
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+    #=-=-=-=-=   SDSS   -=-=-=-=-=#
+    #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
+    airmass = 1.3
+    for filt in sdss_filters:
+        bp = S.ObsBandpass('sdss,{}'.format(filt))
+        spec = S.Observation(sp, bp)
+        mag = spec.effstim(stimtype)
+        mag -= k_ext['sdss:{}'.format(filt)] * airmass
+
+        row['sdss:{}'.format(filt)] = mag
+
+    return row
+
 if generate_MIST:
-    def get_all_mags(teff, logg, ebv):
-        '''Folds a phoenix model through the SDSS lightpath, and the ULTRACAM lightpath. Returns all the abmags, as surface magnitudes.'''
-        row = {
-            'teff': teff, 
-            'logg':logg,
-            'ebv': ebv,
-        }
-
-        filters = [
-            'u_s', 'g_s', 'r_s', 'i_s', 'z_s', 
-            # 'u', 'g', 'r', 'i', 'z'
-        ]
-        sdss_filters = ['u', 'g', 'r', 'i', 'z']
-
-        sp = S.Icat('phoenix', teff, 0.0, logg)
-        sp *= S.reddening.Extinction(ebv)
-
-        # Get the *CAM telescope info
-        S.setref(**getref(telescope))
-
-        #TODO: Check this value
-        airmass = 1.3
-        for filt in filters:
-            bp = S.ObsBandpass("{},{},{}".format(telescope,instrument,filt))
-            spec = S.Observation(sp, bp, force='taper')
-            mag = spec.effstim(stimtype)
-            mag -= k_ext['{}:{}:{}'.format(instrument, telescope, filt)] * airmass
-
-            row['{}:{}:{}'.format(instrument, telescope, filt)] = mag
-
-        # Unset the *CAM thruput stuff
-        S.setref(comptable=None, graphtable=None)  # leave the telescope area as it was
-        # S.setref(area=None)  # reset the telescope area as well?
-
-        #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
-        #=-=-=-=-=   SDSS   -=-=-=-=-=#
-        #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=#
-        airmass = 1.3
-        for filt in sdss_filters:
-            bp = S.ObsBandpass('sdss,{}'.format(filt))
-            spec = S.Observation(sp, bp)
-            mag = spec.effstim(stimtype)
-            mag -= k_ext['sdss:{}'.format(filt)] * airmass
-
-            row['sdss:{}'.format(filt)] = mag
-
-        return row
-
-
     # MS stars are not randomly distributed in teff/logg space. Here's a simulated isochrone.
     MIST_model = np.genfromtxt("tables/MIST_ISO_log_age_8.5.csv", delimiter=',', skip_header=True).T
     masses, teffs, loggs = MIST_model
@@ -97,7 +97,7 @@ if generate_MIST:
     for logg, teff in zip(teffs, loggs):
         # Apply a temperature cut
         if teff > 4000:
-            mags = get_all_mags(teff, logg, 0.0)
+            mags = get_phoenix_mags(teff, logg, 0.0)
 
             # I'll want these later.
             mags['u-g'] = mags['sdss:u'] - mags['sdss:g']
@@ -106,7 +106,7 @@ if generate_MIST:
             mags['i-z'] = mags['sdss:i'] - mags['sdss:z']
 
             for band in ['u', 'g', 'r', 'i', 'z']:
-                mags["{0}_s-{0}".format(band)] = mags['{}:{}:{}_s'.format(instrument, telescope, band)] - mags['sdss:{}'.format(band)]
+                mags["{0}-{0}_s".format(band)] = mags['{}:{}:{}_s'.format(instrument, telescope, band)] - mags['sdss:{}'.format(band)]
 
             MIST_df = MIST_df.append(mags, ignore_index=True)
 
@@ -212,7 +212,7 @@ else:
 def chisq(args):
     '''Uses this model to calculate chi squared:
     
-    g_inst - g_sdss = g_zp + a_g(g-r)_sdss
+    g_sdss - g_inst = g_zp + a_g(g-r)_sdss
     
     optimises for g_zp and a_g
     '''
@@ -220,12 +220,12 @@ def chisq(args):
     zero_point, colour_term = args
 
     calc_wd_correction = zero_point + (colour_term * koester_df[diagnostic])
-    diff = calc_wd_correction - koester_df['{0}_s-{0}'.format(targetband)]
+    diff = calc_wd_correction - koester_df['{0}-{0}_s'.format(targetband)]
     chisq += (diff**2).sum()
 
     color = MIST_df[diagnostic]
     calc_ms_correction = zero_point + (colour_term * color)
-    diff = calc_ms_correction - (MIST_df['{}:{}:{}_s'.format(instrument, telescope, targetband)] - MIST_df['sdss:{0}'.format(targetband)])
+    diff = calc_ms_correction - (MIST_df['sdss:{0}'.format(targetband)] - MIST_df['{}:{}:{}_s'.format(instrument, telescope, targetband)])
     chisq += (diff**2).sum()
 
     return chisq
@@ -242,12 +242,12 @@ print(soln)
 fig, ax = plt.subplots(figsize=(10, 5))
 
 MIST_df.plot.scatter(
-    diagnostic, '{0}_s-{0}'.format(targetband),
+    diagnostic, '{0}-{0}_s'.format(targetband),
     ax=ax,
     color='black', label="MIST MS models, 8.5Gyrs",
 )
 koester_df.plot.scatter(
-    diagnostic, '{0}_s-{0}'.format(targetband),
+    diagnostic, '{0}-{0}_s'.format(targetband),
     ax=ax,
     color='red', label='WD Koester Models, logg {}'.format(logg),
 )
@@ -260,7 +260,7 @@ yr = zp + colterm * xr
 
 ax.plot(xr, yr, color='blue', label='Fitted line, colour term: {:.3f}'.format(colterm))
 
-ax.set_ylabel("{}/{} ${}_s$ - SDSS ${}$".format(telescope.upper(), instrument.upper(), targetband, targetband))
+ax.set_ylabel("SDSS ${}$ - {}/{} ${}_s$".format(targetband, telescope.upper(), instrument.upper(), targetband))
 ax.set_xlabel("SDSS ${}$".format(diagnostic))
 
 

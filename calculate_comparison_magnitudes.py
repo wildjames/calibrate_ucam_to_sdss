@@ -58,7 +58,8 @@ for ap_index in range(len(mags)):
     print("g: {:.3f}".format(g_inst))
     print("u: {:.3f}".format(u_inst))
 
-    # First iteration uses no colour term, so set the sdss mags as equal to the instrumental ones.
+    # First iteration uses no colour term, so set the sdss 
+    # mags as equal to the instrumental ones.
     u_sdss = u_inst - u_zp
     g_sdss = g_inst - g_zp
     r_sdss = r_inst - r_zp
@@ -108,6 +109,7 @@ for ap_index in range(len(mags)):
 sdss_df = pd.DataFrame()
 for ap_index in range(len(mags)):
     row = {
+        
         "aperture": str(ap_index+1),
         'u': sdss_mags['u'][ap_index],
         'g': sdss_mags['g'][ap_index],
