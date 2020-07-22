@@ -37,8 +37,6 @@ bands = ['r', 'g', 'u']
 mydir = split(abspath(__file__))[0]
 values_fname = join(mydir, "FOUND_VALUES.json")
 
-print("Using the smith (2002) data found in:")
-print(smith_table_fname)
 print("and the prior variables stored at: ")
 print(values_fname)
 
