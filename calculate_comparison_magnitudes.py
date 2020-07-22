@@ -15,7 +15,7 @@ parser = argparse.ArgumentParser(description=desc)
 parser.add_argument("reduction")
 parser.add_argument("RA")
 parser.add_argument("DEC")
-parser.add_argument('oname', default="comparison_star_sdss_mags")
+parser.add_argument('oname', default="comparison_star_sdss_mags", required=False)
 
 args = parser.parse_args()
 
