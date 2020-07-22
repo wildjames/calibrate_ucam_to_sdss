@@ -134,5 +134,6 @@ function of u-g. IF YOU CHANGE THAT, CHANGE THIS SCRIPT!!!
     print("\n\nI calculated the zero points, accounting for airmass in the target reduction and the bandpass differences between UCAM and SDSS, as:")
     print('\n'.join(["{}: {:.4f}".format(key, val) for key, val in zero_points.items()]))
 
+    print("Dumping values into {}".format(values_fname))
     with open(values_fname, 'w') as f:
         f.write(json.dumps(variables))
