@@ -9,7 +9,7 @@ import pysynphot as S
 from scipy.optimize import minimize
 from ucam_thruput import getref
 
-generate_koester = True
+generate_koester = False
 generate_MIST = False
 
 telescope, instrument = 'ntt', 'ucam'
@@ -33,9 +33,9 @@ k_ext = {
     'ucam:ntt:z_s': 0.0,
 }
 
-targetband = 'g'
+targetband = 'u'
 diagnostic = 'u-g'
-diagnostic = 'g-r'
+# diagnostic = 'g-r'
 
 def get_phoenix_mags(teff, logg, ebv):
     '''Folds a phoenix model through the SDSS lightpath, 
