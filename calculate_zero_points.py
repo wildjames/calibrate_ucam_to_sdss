@@ -63,21 +63,30 @@ if __name__ in "__main__":
     #=--=#=--=#=--=#=--=#=--=#=--=#=--=#=--=#
     #=--=#=--= USER DEFINED STUFF =--=#=--=#
     #=--=#=--=#=--=#=--=#=--=#=--=#=--=#=--=#
-    '''
-    The standard star reduction MUST be done with large apertures to 
-    capture all the light from the star.
+    desc = '''
+The standard star reduction MUST be done with large apertures to 
+capture all the light from the star.
 
-    The Smith tables contain good, reliable magnitudes for the standards. 
-    These can be retrieved by entering its name below, but check the format is correct first!
+The Smith tables contain good, reliable magnitudes for the standards. 
+These can be retrieved by entering its name below, but check the format is correct first!
 
 
-    NOTE!!! This script assumes that the colour terms are all a 
-    function of g-r, EXCEPT the u band, which is assumed to be a 
-    function of u-g. IF YOU CHANGE THAT, CHANGE THIS SCRIPT!!!
-    '''
+NOTE!!! This script assumes that the colour terms are all a 
+function of g-r, EXCEPT the u band, which is assumed to be a 
+function of u-g. IF YOU CHANGE THAT, CHANGE THIS SCRIPT!!!
+'''
+    import argparse
 
-    standard_star_reduction = "Quality_Reductions/2019_09_27-run007.log"
-    std_name = 'SA 114 548'
+    parser = argparse.ArgumentParser(description=desc)
+    parser.add_argument('std_reduction')
+    parser.add_argument('std_name')
+
+    # standard_star_reduction = "Quality_Reductions/2019_09_27-run007.log"
+    # std_name = 'SA 114 548'
+
+    args = parser.parse_args()
+    standard_star_reduction = args.std_reduction
+    std_name = args.std_name
 
     # Observed bands in the above reduction.
     bands = ['r', 'g', 'u']
