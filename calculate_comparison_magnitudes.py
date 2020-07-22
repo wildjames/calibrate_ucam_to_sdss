@@ -11,11 +11,11 @@ g_sdss = g_inst,noatmos - g_zp - a_g(g-r)
 
 import argparse
 
-parser = argparse.ArgumentParser(description=desc)
+parser = argparse.ArgumentParser(description=desc, prefix_chars='@')
 parser.add_argument("reduction")
 parser.add_argument("RA")
 parser.add_argument("DEC")
-parser.add_argument('--oname', default="comparison_star_sdss_mags", required=False)
+parser.add_argument('@@oname', default="comparison_star_sdss_mags", required=False)
 
 args = parser.parse_args()
 
