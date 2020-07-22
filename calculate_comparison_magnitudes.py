@@ -1,23 +1,47 @@
-import hipercam as hcam
+import argparse
 import json
-from calphot.constructReference import get_instrumental_mags
+from os.path import abspath, join, split
+
+import hipercam as hcam
 import pandas as pd
 
+from calphot.constructReference import get_instrumental_mags
 
-'''
+desc = '''
 Using the standard - like reduction, calculate the comparison star magnitudes of a logfile.
 g_sdss = g_inst,noatmos - g_zp - a_g(g-r) 
 '''
 
-fname = "Quality_Reductions/2019_09_27-run015_std.log"
-target_coords = "20 29 17.13 -43 40 19.8"
+
+parser = argparse.ArgumentParser(description=desc, prefix_chars='@')
+parser.add_argument("reduction")
+parser.add_argument("RA")
+parser.add_argument("DEC")
+parser.add_argument('@@oname', default="comparison_star_sdss_mags", required=False)
+
+args = parser.parse_args()
+
+print(args)
+
+fname = args.reduction
+target_coords = "{} {}".format(args.RA, args.DEC)
+oname = args.oname
+
+# fname = "Quality_Reductions/2019_09_27-run015_std.log"
+# target_coords = "20:29:17.13 -43:40:19.8"
 obsname = 'lasilla'
 k_ext = [0.1129, 0.2020, 0.4868]
 bands = ['r', 'g', 'u']
 
-# Previously calculated values
-variables_fname = "FOUND_VALUES.json"
-with open(variables_fname, 'r') as f:
+# Gather some data files
+mydir = split(abspath(__file__))[0]
+values_fname = join(mydir, "FOUND_VALUES.json")
+
+print("and the prior variables stored at: ")
+print(values_fname)
+
+# First, remember what we've found so far
+with open(values_fname, 'r') as f:
     variables = json.load(f)
 
 
@@ -118,6 +142,4 @@ for ap_index in range(len(mags)):
 print("Comparison star SDSS magnitudes:")
 print(sdss_df)
 
-sdss_df.to_csv("tables/comparison_star_sdss_mags.csv")
-
-
+sdss_df.to_csv(oname)
