@@ -15,16 +15,18 @@ parser = argparse.ArgumentParser(description=desc)
 parser.add_argument("reduction")
 parser.add_argument("RA")
 parser.add_argument("DEC")
-parser.add_argument('oname', default="comparison_star_sdss_mags.csv")
+parser.add_argument('oname', default="comparison_star_sdss_mags")
 
 args = parser.parse_args()
+
+print(args)
 
 fname = args.reduction
 target_coords = "{} {}".format(args.RA, args.DEC)
 oname = args.oname
 
 # fname = "Quality_Reductions/2019_09_27-run015_std.log"
-# target_coords = "20 29 17.13 -43 40 19.8"
+# target_coords = "20:29:17.13 -43:40:19.8"
 obsname = 'lasilla'
 k_ext = [0.1129, 0.2020, 0.4868]
 bands = ['r', 'g', 'u']
