@@ -1,15 +1,17 @@
-import hipercam as hcam
+import argparse
 import json
-from calphot.constructReference import get_instrumental_mags
+from os.path import abspath, join, split
+
+import hipercam as hcam
 import pandas as pd
 
+from calphot.constructReference import get_instrumental_mags
 
 desc = '''
 Using the standard - like reduction, calculate the comparison star magnitudes of a logfile.
 g_sdss = g_inst,noatmos - g_zp - a_g(g-r) 
 '''
 
-import argparse
 
 parser = argparse.ArgumentParser(description=desc, prefix_chars='@')
 parser.add_argument("reduction")
@@ -143,5 +145,3 @@ print("Comparison star SDSS magnitudes:")
 print(sdss_df)
 
 sdss_df.to_csv(oname)
-
-
