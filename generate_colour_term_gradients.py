@@ -19,6 +19,8 @@ variables_fname = "FOUND_VALUES.json"
 if os.path.isfile(variables_fname):
     with open(variables_fname, 'r') as f:
         variables = json.load(f)
+else:
+    variables = {}
 if not os.path.isdir("figs"):
     os.mkdir('figs')
 
