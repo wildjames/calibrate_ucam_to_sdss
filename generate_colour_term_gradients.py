@@ -40,9 +40,6 @@ k_ext = {
     'ucam:ntt:z_s': 0.0,
 }
 
-targetband = 'u'
-diagnostic = 'u-g'
-# diagnostic = 'g-r'
 targetband = input("What band are we correcting? (ugriz)  ")
 diagnostic = input("What colour should we use for a diagnostic (e.g. 'u-g'): ")
 
