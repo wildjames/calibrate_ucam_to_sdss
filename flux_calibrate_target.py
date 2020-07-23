@@ -126,6 +126,8 @@ star_loc = coord.SkyCoord(
 # Saving data location
 if not isdir(lc_dir):
     mkdir(lc_dir)
+if not isdir('figs'):
+    mkdir('figs')
 
 # Loop through the logfiles, and compute the flux calibration stuff
 for fname in fnames:
