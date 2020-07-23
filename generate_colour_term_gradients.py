@@ -16,8 +16,9 @@ telescope, instrument = 'ntt', 'ucam'
 stimtype = 'abmag'
 
 variables_fname = "FOUND_VALUES.json"
-with open(variables_fname, 'r') as f:
-    variables = json.load(f)
+if os.path.isfile(variables_fname):
+    with open(variables_fname, 'r') as f:
+        variables = json.load(f)
 
 # These are not relevant - leave as zero for all bands
 k_ext = {
