@@ -122,6 +122,7 @@ star_loc = coord.SkyCoord(
     target_coords,
     unit=(u.hourangle, u.deg), frame='icrs'
 )
+print(star_loc)
 
 # Saving data location
 if not isdir(lc_dir):
@@ -180,13 +181,6 @@ for fname in fnames:
     print("  E = {:.3f}".format(E))
 
     E = np.rint(E)
-    # The above can be off, if the eclipse isnt the minimum. in/decriment until it's within bounds
-    while T0 + E*period < gband_lc.t[0]:
-        print("    !!! Eclipse time not within these data! Incrimenting E...")
-        E += 1
-    while T0 + E*period > gband_lc.t[-1]:
-        print("    !!! Eclipse time not within these data! Decrimenting E...")
-        E -= 1
 
     print("I think that the eclipse spanning from {:.3f} to {:.3f} is cycle number {}".format(
         gband_lc.t[0], gband_lc.t[-1], E)
