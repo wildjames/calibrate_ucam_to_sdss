@@ -22,7 +22,7 @@ if os.path.isfile(variables_fname):
 if not os.path.isdir("figs"):
     os.mkdir('figs')
 
-mydir = os.abspath(__file__)
+mydir = os.path.abspath(__file__)
 
 # These are not relevant - leave as zero for all bands
 k_ext = {
