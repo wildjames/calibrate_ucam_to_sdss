@@ -16,8 +16,15 @@ telescope, instrument = 'ntt', 'ucam'
 stimtype = 'abmag'
 
 variables_fname = "FOUND_VALUES.json"
-with open(variables_fname, 'r') as f:
-    variables = json.load(f)
+if os.path.isfile(variables_fname):
+    with open(variables_fname, 'r') as f:
+        variables = json.load(f)
+else:
+    variables = {}
+if not os.path.isdir("figs"):
+    os.mkdir('figs')
+
+mydir = os.path.dirname(__file__)
 
 # These are not relevant - leave as zero for all bands
 k_ext = {
@@ -33,9 +40,8 @@ k_ext = {
     'ucam:ntt:z_s': 0.0,
 }
 
-targetband = 'u'
-diagnostic = 'u-g'
-# diagnostic = 'g-r'
+targetband = input("What band are we correcting? (ugriz)  ")
+diagnostic = input("What colour should we use for a diagnostic (e.g. 'u-g'): ")
 
 def get_phoenix_mags(teff, logg, ebv):
     '''Folds a phoenix model through the SDSS lightpath, 
@@ -88,7 +94,7 @@ def get_phoenix_mags(teff, logg, ebv):
 
 if generate_MIST:
     # MS stars are not randomly distributed in teff/logg space. Here's a simulated isochrone.
-    MIST_model = np.genfromtxt("tables/MIST_ISO_log_age_8.5.csv", delimiter=',', skip_header=True).T
+    MIST_model = np.genfromtxt(os.path.join(mydir, "tables/MIST_ISO_log_age_8.5.csv"), delimiter=',', skip_header=True).T
     masses, teffs, loggs = MIST_model
 
     # Initialise the dataframe
@@ -110,9 +116,9 @@ if generate_MIST:
 
             MIST_df = MIST_df.append(mags, ignore_index=True)
 
-    MIST_df.to_csv("tables/MIST_mags.csv")
+    MIST_df.to_csv(os.path.join(mydir, "tables/MIST_mags.csv"))
 else:
-    MIST_df = pd.read_csv("tables/MIST_mags.csv")
+    MIST_df = pd.read_csv(os.path.join(mydir, "tables/MIST_mags.csv"))
 
 ################## KOESTER MODELS ##################
 
@@ -138,7 +144,7 @@ if generate_koester:
         'no decimal points in the logg please'
         teff = str(teff)
         logg = str(logg)
-        return "koester2/da{:>05s}_{:>03s}.dk.dat.txt".format(teff, logg)
+        return os.path.join(mydir, "tables/koester2/da{:>05s}_{:>03s}.dk.dat.txt".format(teff, logg))
 
     # I want to do each file in the koester catalogue
     for teff in teffs:
@@ -205,9 +211,9 @@ if generate_koester:
         # Update the table. Apply a colour cut on g-r
         koester_df = koester_df.append(row, ignore_index=True, sort=True)
 
-    koester_df.to_csv("tables/koester_magnitudes_logg_{}.csv".format(logg))
+    koester_df.to_csv(os.path.join(mydir, "tables/koester_magnitudes_logg_{}.csv".format(logg)))
 else:
-    koester_df = pd.read_csv("tables/koester_magnitudes_logg_850.csv")
+    koester_df = pd.read_csv(os.path.join(mydir, "tables/koester_magnitudes_logg_850.csv"))
 
 def chisq(args):
     '''Uses this model to calculate chi squared:

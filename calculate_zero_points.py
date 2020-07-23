@@ -11,11 +11,11 @@ from calphot.constructReference import get_instrumental_mags
 mydir = split(abspath(__file__))[0]
 # This is the machine-readable version of the smith table. You shouldn't need to fiddle this!
 smith_table_fname = join(mydir, "tables/tab08.dat.txt")
-values_fname = join(mydir, "FOUND_VALUES.json")
+values_fname = "FOUND_VALUES.json"
 print("Using the smith (2002) data found in:")
 print(smith_table_fname)
 print("and the prior variables stored at: ")
-print(values_fname)
+print(abspath(values_fname))
 # First, remember what we've found so far
 with open(values_fname, 'r') as f:
     variables = json.load(f)

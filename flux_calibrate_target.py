@@ -1,3 +1,4 @@
+import argparse
 import json
 from os import mkdir
 from os.path import isdir, join
@@ -14,45 +15,33 @@ from astropy import units as u
 from astropy.stats import sigma_clipped_stats
 
 from calphot.getEclipseTimes import tcorrect
+from ruamel import yaml
 
-#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
-########## USER DEFINED INPUTS ##########
-#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
+parser = argparse.ArgumentParser("YAML input method.")
+parser.add_argument(
+    "input_file",
+    help="The input YAML file to be computed"
+)
+args = parser.parse_args()
+yaml_fname = args.input_file
 
-# Where are the target data stored? 
-# Aperture 1 is assumed to be the target star!
-fnames = [
-    'Quality_Reductions/2019_09_27-run015.log',
-    'Quality_Reductions/2019_09_29-run015.log',
-    'Quality_Reductions/2019_09_30-run013.log',
-]
+with open(yaml_fname) as yaml_file:
+    input_dict = yaml.safe_load(yaml_file)
 
-oname = 'ASASSN-17jf'
-lc_dir = 'LIGHTCURVES'
+fnames =                    input_dict['fnames']
+oname =                     input_dict['oname']
+lc_dir =                    input_dict['lc_dir']
+target_coords =             input_dict['target_coords']
+T0 =                        input_dict['T0']
+period =                    input_dict['period']
+lower_phase, upper_phase =  input_dict['phase limits']
+k_ext =                     input_dict['k_ext']
+obsname =                   input_dict['obsname']
+bands =                     input_dict['bands']
+comparison_aperture =       input_dict['comparison_aperture']
+comparison_mags_tablename = input_dict['comparison_mags_tablename']
+variables_fname =           input_dict['previous values']
 
-target_coords = "20 29 17.13 -43 40 19.8"
-T0 = 58754.12003
-period = 0.056789
-lower_phase, upper_phase = -0.5, 0.5
-
-# Atmospheric extinction coefficients. Calculated empirically for UCAM, NTT, super filters.
-# Must be in CCD order of the logfile. This is typically r, g, u
-k_ext = [0.1129, 0.2020, 0.4868]
-# Observatory name
-obsname = 'lasilla'
-# CCD filter order
-bands = ['r', 'g', 'u']
-
-# Comparison stars data
-comparison_aperture = '2'
-comparison_mags_tablename = 'tables/comparison_star_sdss_mags.csv'
-
-# Previously calculated values
-variables_fname = "FOUND_VALUES.json"
-
-#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=##=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
-#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=##=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
-#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=##=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#=-=#
 
 def sdss_mag2flux(mag):
     '''Takes an SDSS magnitude, returns the corresponding flux in [mJy]'''
@@ -63,9 +52,6 @@ def sdss_mag2flux(mag):
 
     return flux
 
-
-##### INFORMATION GATHERING #####
-##### INFORMATION GATHERING #####
 ##### INFORMATION GATHERING #####
 
 # Get back previously calculated values
@@ -136,10 +122,13 @@ star_loc = coord.SkyCoord(
     target_coords,
     unit=(u.hourangle, u.deg), frame='icrs'
 )
+print(star_loc)
 
 # Saving data location
 if not isdir(lc_dir):
     mkdir(lc_dir)
+if not isdir('figs'):
+    mkdir('figs')
 
 # Loop through the logfiles, and compute the flux calibration stuff
 for fname in fnames:
@@ -192,13 +181,6 @@ for fname in fnames:
     print("  E = {:.3f}".format(E))
 
     E = np.rint(E)
-    # The above can be off, if the eclipse isnt the minimum. in/decriment until it's within bounds
-    while T0 + E*period < gband_lc.t[0]:
-        print("    !!! Eclipse time not within these data! Incrimenting E...")
-        E += 1
-    while T0 + E*period > gband_lc.t[-1]:
-        print("    !!! Eclipse time not within these data! Decrimenting E...")
-        E -= 1
 
     print("I think that the eclipse spanning from {:.3f} to {:.3f} is cycle number {}".format(
         gband_lc.t[0], gband_lc.t[-1], E)
