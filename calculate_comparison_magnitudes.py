@@ -34,8 +34,8 @@ k_ext = [0.1129, 0.2020, 0.4868]
 bands = ['r', 'g', 'u']
 
 # Gather some data files
-mydir = split(abspath(__file__))[0]
-values_fname = join(mydir, "FOUND_VALUES.json")
+# mydir = split(abspath(__file__))[0]
+values_fname = abspath("FOUND_VALUES.json")
 
 print("and the prior variables stored at: ")
 print(values_fname)
