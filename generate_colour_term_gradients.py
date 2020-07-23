@@ -43,6 +43,8 @@ k_ext = {
 targetband = 'u'
 diagnostic = 'u-g'
 # diagnostic = 'g-r'
+targetband = input("What band are we correcting? (ugriz)  ")
+diagnostic = input("What colour should we use for a diagnostic (e.g. 'u-g'): ")
 
 def get_phoenix_mags(teff, logg, ebv):
     '''Folds a phoenix model through the SDSS lightpath, 
