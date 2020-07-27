@@ -46,7 +46,7 @@ def get_smith_info(starname, tablename):
     gathered_mags['i'] = gathered_mags["r"] - std_data["r'-i'"].values[0]
     gathered_mags['z'] = gathered_mags["i"] - std_data["i'-z'"].values[0]
 
-    coords = "{} {}".format(std_data['RA (J2000.0)'].values[0], std_data['RA (J2000.0)'].values[0])
+    coords = "{} {}".format(std_data['RA (J2000.0)'].values[0], std_data['DEC (J2000.0)'].values[0])
     return gathered_mags, coords
 
 
@@ -64,17 +64,17 @@ if __name__ in "__main__":
     #=--=#=--= USER DEFINED STUFF =--=#=--=#
     #=--=#=--=#=--=#=--=#=--=#=--=#=--=#=--=#
     desc = '''
-The standard star reduction MUST be done with large apertures to 
-capture all the light from the star.
+    The standard star reduction MUST be done with large apertures to 
+    capture all the light from the star.
 
-The Smith tables contain good, reliable magnitudes for the standards. 
-These can be retrieved by entering its name below, but check the format is correct first!
+    The Smith tables contain good, reliable magnitudes for the standards. 
+    These can be retrieved by entering its name below, but check the format is correct first!
 
 
-NOTE!!! This script assumes that the colour terms are all a 
-function of g-r, EXCEPT the u band, which is assumed to be a 
-function of u-g. IF YOU CHANGE THAT, CHANGE THIS SCRIPT!!!
-'''
+    NOTE!!! This script assumes that the colour terms are all a 
+    function of g-r, EXCEPT the u band, which is assumed to be a 
+    function of u-g. IF YOU CHANGE THAT, CHANGE THIS SCRIPT!!!
+    '''
     import argparse
 
     parser = argparse.ArgumentParser(description=desc)
