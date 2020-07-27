@@ -112,7 +112,7 @@ for ap_index in range(len(mags)):
         g_sdss = g_sdss_new
         r_sdss = r_sdss_new
 
-        print("Iteration {:>03d} | du: {:>06.3f} | dg: {:>06.3f} | dr: {:>06.3f} |".format(iteration, du, dg, dr), end='\r')
+        print("Iteration {:>03d} | du: {:>06.3f} | dg: {:>06.3f} | dr: {:>06.3f} |".format(iteration, du, dg, dr), end='\n')
 
 
     print("\n\nConverged!")
