@@ -18,6 +18,7 @@ Required modules that are a bit more involved:
   - pysynphot
   - ucam_thruput
 
+The "problem children" are hipercam and pysynphot.
 
 # What to do
 
