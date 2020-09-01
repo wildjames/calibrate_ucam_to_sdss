@@ -1,9 +1,9 @@
 # Where are the target data stored? 
 # Aperture 1 is assumed to be the target star!
 'fnames':
-  - "ASASSN-16kr/REDUCED/ucam/2019_09_27/target.log"
-  - "ASASSN-16kr/REDUCED/ucam/2019_09_28/target.log"
-  - "ASASSN-16kr/REDUCED/ucam/2019_09_29/target.log"
+  - "ASASSN-16kr/REDUCED/ucam/2019_09_27/target_ala2018.log"
+  - "ASASSN-16kr/REDUCED/ucam/2019_09_28/target_ala2018.log"
+  - "ASASSN-16kr/REDUCED/ucam/2019_09_29/target_ala2018.log"
 
 'oname':  'ASASSN-16kr'
 'lc_dir': 'LIGHTCURVES'

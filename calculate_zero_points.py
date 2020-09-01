@@ -90,10 +90,14 @@ if __name__ in "__main__":
 
     # Observed bands in the above reduction.
     bands = ['r', 'g', 'u']
+    bands = input("Please enter the filters, in order, separated by spaces: ").split(" ")
     # Observing conditions
-    obsname = 'lasilla'
+    obsname = input("Please enter the observation site: ")
     # Atmospheric extinction, in CCD order (typically r,g,u)
     k_ext = [0.1129, 0.2020, 0.4868]
+    k_ext = []
+    for band in bands:
+        k_ext.append(float(input("Please enter the extinction coefficient for band {}".format(band))))
 
     #=--=#=--=#=--=#=--=#=--=#=--=#=--=#=--=#
     #=--=#=--=#=--=#=--=#=--=#=--=#=--=#=--=#
@@ -122,6 +126,9 @@ if __name__ in "__main__":
         if 'u' in band:
             print("  using u-g")
             colour_term *= smith_mags['u'] - smith_mags['g']
+        elif 'i' in band:
+            print("  using g-i")
+            colour_term *= smith_mags['g'] - smith_mags['i']
         else:
             print("  using g-r")
             colour_term *= smith_mags['g'] - smith_mags['r']

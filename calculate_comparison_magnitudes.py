@@ -27,11 +27,11 @@ fname = args.reduction
 target_coords = "{} {}".format(args.RA, args.DEC)
 oname = args.oname
 
-# fname = "Quality_Reductions/2019_09_27-run015_std.log"
-# target_coords = "20:29:17.13 -43:40:19.8"
 obsname = 'lasilla'
 k_ext = [0.1129, 0.2020, 0.4868]
 bands = ['r', 'g', 'u']
+
+obsname = input("Please enter the observation site name: ")
 
 # Gather some data files
 # mydir = split(abspath(__file__))[0]
@@ -66,17 +66,17 @@ sdss_mags = {band: [] for band in bands}
 # Colour terms. a_u is u-g, g and r are g-r.
 a_u = variables['au']
 a_g = variables['ag']
-a_r = variables['ar']
+a_i = variables['ar']
 
 # Zero points in each CCD for UCAM on the NTT.
 u_zp = variables['u_zp']
 g_zp = variables['g_zp']
-r_zp = variables['r_zp']
+i_zp = variables['r_zp']
 
 for ap_index in range(len(mags)):
     u_inst = inst_mags['u'][ap_index]
     g_inst = inst_mags['g'][ap_index]
-    r_inst = inst_mags['r'][ap_index]
+    i_inst = inst_mags['r'][ap_index]
     print("Got the following instrumental magnitudes for aperture {}:".format(ap_index+1))
     print("r: {:.3f}".format(r_inst))
     print("g: {:.3f}".format(g_inst))
@@ -118,12 +118,12 @@ for ap_index in range(len(mags)):
     print("\n\nConverged!")
     print("u_sdss: {:.3f}".format(u_sdss))
     print("g_sdss: {:.3f}".format(g_sdss))
-    print("r_sdss: {:.3f}".format(r_sdss))
+    print("i_sdss: {:.3f}".format(i_sdss))
 
     print("This is a colour term of...")
     print("a_u*(u_sdss - g_sdss) = {:.3f}".format(a_u*(u_sdss - g_sdss)))
     print("a_g*(g_sdss - r_sdss) = {:.3f}".format(a_g*(g_sdss - r_sdss)))
-    print("a_r*(g_sdss - r_sdss) = {:.3f}".format(a_r*(g_sdss - r_sdss)))
+    print("a_i*(g_sdss - r_sdss) = {:.3f}".format(a_i*(g_sdss - r_sdss)))
     print("\n\n\n\n")
 
     sdss_mags['u'].append(u_sdss)
@@ -136,7 +136,7 @@ for ap_index in range(len(mags)):
         "aperture": str(ap_index+1),
         'u': sdss_mags['u'][ap_index],
         'g': sdss_mags['g'][ap_index],
-        'r': sdss_mags['r'][ap_index],
+        'i': sdss_mags['r'][ap_index],
     }
     sdss_df = sdss_df.append(row, ignore_index=True)
 print("Comparison star SDSS magnitudes:")

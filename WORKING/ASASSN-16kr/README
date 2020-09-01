@@ -1,3 +1,23 @@
-The calibration that uses the corrected SDSS pipeline to get the correct colours is way off the data that were taken in 2018, which used the regular SDSS filters. 
+Lightcurves calibrated using colour term corrections. 
 
-This is a problem! They should agreee!!!!!
+I have the benefit of observations being both in the super and regular filter systems. The resulting calibration is very satisfying - the new and old filters agree with each other. Finally. 
+
+The MCMC fit looks fine, but the WD model atmosphere fits are bad when the three bands (regular SDSS) are fitted together. I have no idea why. 
+
+We have fitted the WD as follows:
+
+  1. Use the poor fit as a starting point. Take its log(g) distribution as the prior from now on.
+  2. For each band, fit a Teff, parallax, ebv, log(g) to it.
+  3. Multiply the resulting distributions of Teff
+  4. use this Teff to calculate the physical parameters of the system, which includes log(g)
+  5. Feed this log(g) dustribution back into 1.
+
+Fitting all three, this gives a Teff:
+  Teff = 11468 +307 -285
+
+Taking the joint distributions of separate fits:
+  Teff = Mean: 12140 +/- 268
+
+The change is minor, but is more likely to capture the systematic uncertainty better. Counter to this, the uncertainty DROPS!? Fuck it.
+
+

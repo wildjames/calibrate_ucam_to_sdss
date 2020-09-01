@@ -9,8 +9,8 @@ import pysynphot as S
 from scipy.optimize import minimize
 from ucam_thruput import getref
 
-generate_koester = False
-generate_MIST = False
+generate_koester = True
+generate_MIST = True
 
 telescope, instrument = 'ntt', 'ucam'
 stimtype = 'abmag'
@@ -110,6 +110,7 @@ if generate_MIST:
             mags['g-r'] = mags['sdss:g'] - mags['sdss:r']
             mags['r-i'] = mags['sdss:r'] - mags['sdss:i']
             mags['i-z'] = mags['sdss:i'] - mags['sdss:z']
+            mags['g-i'] = mags['sdss:g'] - mags['sdss:i']
 
             for band in ['u', 'g', 'r', 'i', 'z']:
                 mags["{0}-{0}_s".format(band)] = mags['{}:{}:{}_s'.format(instrument, telescope, band)] - mags['sdss:{}'.format(band)]
@@ -134,7 +135,7 @@ if generate_koester:
 
     # Lets store it all in a pandas dataframe.
     INFO = ['Teff', 'logg']
-    SDSS_COLOURS = ['u-g', 'g-r', 'r-i', 'i-z']
+    SDSS_COLOURS = ['u-g', 'g-r', 'r-i', 'i-z', 'g-i']
     CORRECTIONS = ["{}-{}".format(a,b) for a,b in zip(sdss_filters, cam_filters)]
 
     COLNAMES = INFO + SDSS_COLOURS + CORRECTIONS
