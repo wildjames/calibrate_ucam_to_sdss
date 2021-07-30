@@ -44,16 +44,16 @@ targetband = input("What band are we correcting? (ugriz)  ")
 diagnostic = input("What colour should we use for a diagnostic (e.g. 'u-g'): ")
 
 def get_phoenix_mags(teff, logg, ebv):
-    '''Folds a phoenix model through the SDSS lightpath, 
+    '''Folds a phoenix model through the SDSS lightpath,
     and the ULTRACAM lightpath. Returns all the abmags, as surface magnitudes.'''
     row = {
-        'teff': teff, 
+        'teff': teff,
         'logg':logg,
         'ebv': ebv,
     }
 
     filters = [
-        'u_s', 'g_s', 'r_s', 'i_s', 'z_s', 
+        'u_s', 'g_s', 'r_s', 'i_s', 'z_s',
         # 'u', 'g', 'r', 'i', 'z'
     ]
     sdss_filters = ['u', 'g', 'r', 'i', 'z']
@@ -178,7 +178,7 @@ if generate_koester:
         )
 
         # Get all the SDSS magnitudes
-        S.setref(comptable=None, graphtable=None)  # leave the telescope 
+        S.setref(comptable=None, graphtable=None)  # leave the telescope
         simulated_mags = {}
         for f in sdss_filters:
             bp = S.ObsBandpass("{},{}".format('sdss', f))
@@ -218,9 +218,9 @@ else:
 
 def chisq(args):
     '''Uses this model to calculate chi squared:
-    
+
     g_sdss - g_inst = g_zp + a_g(g-r)_sdss
-    
+
     optimises for g_zp and a_g
     '''
     chisq = 0.0

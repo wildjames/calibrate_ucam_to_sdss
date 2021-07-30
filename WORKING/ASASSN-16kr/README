@@ -1,5 +1,7 @@
 Lightcurves calibrated using colour term corrections. 
 
+This uses the target_calibration.yaml file to calculate the SDSS magnitude of the comparison stars, from a standard observation. The results of this are then fed into the lightcurve extraction jupyter notebook, which in turn spits out the calibrated lightcurves. 
+
 I have the benefit of observations being both in the super and regular filter systems. The resulting calibration is very satisfying - the new and old filters agree with each other. Finally. 
 
 The MCMC fit looks fine, but the WD model atmosphere fits are bad when the three bands (regular SDSS) are fitted together. I have no idea why. 

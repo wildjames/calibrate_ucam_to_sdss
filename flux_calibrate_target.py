@@ -91,7 +91,7 @@ print(target_mags)
 
 # Colour correction flux factor calculation
 # I need to compute this factor:
-# 10^[0.4*a({g_targ - r_targ} - {g_comp - r_comp})]
+# 10^[a({g_targ - r_targ} - {g_comp - r_comp})]
 # where a is the colour term, and g-r could be u-g for each
 # This factor will be close to constant across the lightcurve, so I'm 
 # calculating it based on the average magnitudes of the star. These 

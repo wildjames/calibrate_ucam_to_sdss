@@ -31,6 +31,9 @@ obsname = 'lasilla'
 k_ext = [0.1129, 0.2020, 0.4868]
 bands = ['r', 'g', 'u']
 
+for i, band in enumerate(bands):
+    k_ext[i] = float(input("Enter extinction for {} band: ".format(band)))
+
 obsname = input("Please enter the observation site name: ")
 
 # Gather some data files
@@ -66,17 +69,17 @@ sdss_mags = {band: [] for band in bands}
 # Colour terms. a_u is u-g, g and r are g-r.
 a_u = variables['au']
 a_g = variables['ag']
-a_i = variables['ar']
+a_r = variables['ar']
 
 # Zero points in each CCD for UCAM on the NTT.
 u_zp = variables['u_zp']
 g_zp = variables['g_zp']
-i_zp = variables['r_zp']
+r_zp = variables['r_zp']
 
 for ap_index in range(len(mags)):
     u_inst = inst_mags['u'][ap_index]
     g_inst = inst_mags['g'][ap_index]
-    i_inst = inst_mags['r'][ap_index]
+    r_inst = inst_mags['r'][ap_index]
     print("Got the following instrumental magnitudes for aperture {}:".format(ap_index+1))
     print("r: {:.3f}".format(r_inst))
     print("g: {:.3f}".format(g_inst))
@@ -94,14 +97,14 @@ for ap_index in range(len(mags)):
 
     # Due to the interdependancy of the equations, all bands must be done simultaneously.
     iteration = 0
-    while du + dg + dr > 0.0001:
+    while du + dg + dr > 0.00001:
         iteration += 1
 
-        # u calculation
+        # u calculation
         u_sdss_new = u_inst + u_zp + a_u*(u_sdss - g_sdss)
         # g calculation
         g_sdss_new = g_inst + g_zp + a_g*(g_sdss - r_sdss)
-        # r calculation
+        # r calculation
         r_sdss_new = r_inst + r_zp + a_r*(g_sdss - r_sdss)
 
         du = abs(u_sdss - u_sdss_new)
@@ -116,14 +119,22 @@ for ap_index in range(len(mags)):
 
 
     print("\n\nConverged!")
+    print("u_inst: {:.3f}".format(u_inst))
+    print("g_inst: {:.3f}".format(g_inst))
+    print("r_inst: {:.3f}".format(r_inst))
+    print("")
+    print("u_zp:   {:.3f}".format(u_zp))
+    print("g_zp:   {:.3f}".format(g_zp))
+    print("r_zp:   {:.3f}".format(r_zp))
+    print("")
     print("u_sdss: {:.3f}".format(u_sdss))
     print("g_sdss: {:.3f}".format(g_sdss))
-    print("i_sdss: {:.3f}".format(i_sdss))
+    print("r_sdss: {:.3f}".format(r_sdss))
 
     print("This is a colour term of...")
     print("a_u*(u_sdss - g_sdss) = {:.3f}".format(a_u*(u_sdss - g_sdss)))
     print("a_g*(g_sdss - r_sdss) = {:.3f}".format(a_g*(g_sdss - r_sdss)))
-    print("a_i*(g_sdss - r_sdss) = {:.3f}".format(a_i*(g_sdss - r_sdss)))
+    print("a_r*(g_sdss - r_sdss) = {:.3f}".format(a_r*(g_sdss - r_sdss)))
     print("\n\n\n\n")
 
     sdss_mags['u'].append(u_sdss)
@@ -134,10 +145,12 @@ sdss_df = pd.DataFrame()
 for ap_index in range(len(mags)):
     row = {
         "aperture": str(ap_index+1),
-        'u': sdss_mags['u'][ap_index],
-        'g': sdss_mags['g'][ap_index],
-        'i': sdss_mags['r'][ap_index],
+#       'u': sdss_mags['u'][ap_index],
+#       'g': sdss_mags['g'][ap_index],
+#       'r': sdss_mags['r'][ap_index],
     }
+    for band in bands:
+        row[band] = sdss_mags[band][ap_index]
     sdss_df = sdss_df.append(row, ignore_index=True)
 print("Comparison star SDSS magnitudes:")
 print(sdss_df)
