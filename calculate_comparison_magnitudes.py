@@ -9,7 +9,7 @@ from calphot.constructReference import get_instrumental_mags
 
 desc = '''
 Using the standard - like reduction, calculate the comparison star magnitudes of a logfile.
-g_sdss = g_inst,noatmos - g_zp - a_g(g-r) 
+g_sdss = g_inst,noatmos - g_zp - a_g(g-r)
 '''
 
 
@@ -48,7 +48,7 @@ with open(values_fname, 'r') as f:
     variables = json.load(f)
 
 
-data = hcam.hlog.Hlog.read(fname)
+data = hcam.hlog.Hlog.rascii(fname)
 # Gets a dict of lists, of all the aperture mags. The first one will be the target, so can be discarded.
 inst_mags = get_instrumental_mags(data, target_coords, obsname, k_ext)
 inst_mags = {bands[int(key)-1]: mags for key, mags in inst_mags.items()}
@@ -61,8 +61,8 @@ for key, mags in inst_mags.items():
     print()
 
 
-# Compute the SDSS magnitude of each aperture. You need to do this iteratively, and 
-# simultaneously in all bands, since the colour term used to calculate the SDSS magnitude 
+# Compute the SDSS magnitude of each aperture. You need to do this iteratively, and
+# simultaneously in all bands, since the colour term used to calculate the SDSS magnitude
 # from instrumental DEPENDS on the SDSS magnitude!
 sdss_mags = {band: [] for band in bands}
 
@@ -85,7 +85,7 @@ for ap_index in range(len(mags)):
     print("g: {:.3f}".format(g_inst))
     print("u: {:.3f}".format(u_inst))
 
-    # First iteration uses no colour term, so set the sdss 
+    # First iteration uses no colour term, so set the sdss
     # mags as equal to the instrumental ones.
     u_sdss = u_inst + u_zp
     g_sdss = g_inst + g_zp
