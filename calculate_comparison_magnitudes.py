@@ -29,7 +29,13 @@ oname = args.oname
 
 obsname = 'lasilla'
 k_ext = [0.1129, 0.2020, 0.4868]
-bands = ['r', 'g', 'u']
+bands = input("Please enter the observation bands, space separated, in CCD order: ").split(' ') #['r', 'g', 'u']
+
+if 'r' in bands:
+    redband = 'r'
+elif 'i' in bands:
+    redband = 'i'
+
 
 for i, band in enumerate(bands):
     k_ext[i] = float(input("Enter extinction for {} band: ".format(band)))
@@ -72,19 +78,22 @@ sdss_mags = {band: [] for band in bands}
 # Colour terms. a_u is u-g, g and r are g-r.
 a_u = variables['au']
 a_g = variables['ag']
-a_r = variables['ar']
+a_r = variables['a{}'.format(redband)]
 
 # Zero points in each CCD for UCAM on the NTT.
 u_zp = variables['u_zp']
 g_zp = variables['g_zp']
-r_zp = variables['r_zp']
+r_zp = variables['{}_zp'.format(redband)]
+
 
 for ap_index in range(len(mags)):
     u_inst = inst_mags['u'][ap_index]
     g_inst = inst_mags['g'][ap_index]
-    r_inst = inst_mags['r'][ap_index]
+    r_inst = inst_mags[redband][ap_index]
+
+
     print("Got the following instrumental magnitudes for aperture {}:".format(ap_index+1))
-    print("r: {:.3f}".format(r_inst))
+    print("{}: {:.3f}".format(redband, r_inst))
     print("g: {:.3f}".format(g_inst))
     print("u: {:.3f}".format(u_inst))
 
@@ -124,25 +133,25 @@ for ap_index in range(len(mags)):
     print("\n\nConverged!")
     print("u_inst: {:.3f}".format(u_inst))
     print("g_inst: {:.3f}".format(g_inst))
-    print("r_inst: {:.3f}".format(r_inst))
+    print("{}_inst: {:.3f}".format(redband, r_inst))
     print("")
     print("u_zp:   {:.3f}".format(u_zp))
     print("g_zp:   {:.3f}".format(g_zp))
-    print("r_zp:   {:.3f}".format(r_zp))
+    print("{}_zp:   {:.3f}".format(redband, r_zp))
     print("")
     print("u_sdss: {:.3f}".format(u_sdss))
     print("g_sdss: {:.3f}".format(g_sdss))
-    print("r_sdss: {:.3f}".format(r_sdss))
+    print("{}_sdss: {:.3f}".format(redband, r_sdss))
 
     print("This is a colour term of...")
     print("a_u*(u_sdss - g_sdss) = {:.3f}".format(a_u*(u_sdss - g_sdss)))
-    print("a_g*(g_sdss - r_sdss) = {:.3f}".format(a_g*(g_sdss - r_sdss)))
-    print("a_r*(g_sdss - r_sdss) = {:.3f}".format(a_r*(g_sdss - r_sdss)))
+    print("a_g*(g_sdss - {}_sdss) = {:.3f}".format(redband, a_g*(g_sdss - r_sdss)))
+    print("a_r*(g_sdss - {}_sdss) = {:.3f}".format(redband, a_r*(g_sdss - r_sdss)))
     print("\n\n\n\n")
 
     sdss_mags['u'].append(u_sdss)
     sdss_mags['g'].append(g_sdss)
-    sdss_mags['r'].append(r_sdss)
+    sdss_mags[redband].append(r_sdss)
 
 sdss_df = pd.DataFrame()
 for ap_index in range(len(mags)):
