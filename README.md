@@ -14,7 +14,6 @@ Required python modules (install with pip):
 
 Required modules that are a bit more involved:
   - `hipercam` pipeline
-  - (calphot)[https://github.com/wildjames/calphot]
   - `pysynphot`
   - `ucam_thruput`
 
@@ -64,9 +63,9 @@ You gotta do some stuff, though. It's not too difficult though!
 
     The instrumental magnitudes of the comparison stars can be converted to SDSS magnitudes now. This is done
     with the script `calculate_comparison_magnitudes.py`. Feed it all the observations you want to calibrate,
-    but be warned - **they must all use the same set of comparison stars!!**
+    but be warned - **make sure they all use the same comparison stars!**
     This script uses the FOUND_VALUES.json file, and builds a comparison_mags file.
 
 4. Flux calibrate the target
-    There is a script in here called `flux_calibrate_target.py`, but I personally don't use it and I'd strongly recommend using whatever normal calibration workflow you have, now that you have the proper comparison star magnitudes!
+    There is a script in here called `flux_calibrate_target.py`, but I personally don't use it and I'd strongly recommend using whatever normal calibration workflow you have, now that you have the proper comparison star magnitudes! **The flux calibrate target script here is almost certainly junk for your use-case!**
 
