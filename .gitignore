@@ -8,4 +8,6 @@ WDPARAMS
 LIGHTCURVES
 figs
 WORKING
+*.pdf
+.bin_history
 

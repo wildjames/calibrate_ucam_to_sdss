@@ -5,7 +5,7 @@ from time import sleep
 import hipercam as hcam
 import pandas as pd
 
-from calphot.constructReference import get_instrumental_mags
+from constructReference import get_instrumental_mags
 
 # Gather some data files
 mydir = split(abspath(__file__))[0]
@@ -89,8 +89,8 @@ if __name__ in "__main__":
     std_name = args.std_name
 
     # Observed bands in the above reduction.
-    bands = ['r', 'g', 'u']
     bands = input("Please enter the filters, in order, separated by spaces: ").split(" ")
+    print(" -->> I have the bands: {}".format(bands))
     # Observing conditions
     obsname = input("Please enter the observation site: ")
     # Atmospheric extinction, in CCD order (typically r,g,u)
@@ -98,6 +98,10 @@ if __name__ in "__main__":
     k_ext = []
     for band in bands:
         k_ext.append(float(input("Please enter the extinction coefficient for band {}: ".format(band))))
+
+    print(" -->> I have the extinction coefficients:")
+    for band, k in zip(bands, k_ext):
+        print("{:>5s}: {}".format(band, k))
 
     #=--=#=--=#=--=#=--=#=--=#=--=#=--=#=--=#
     #=--=#=--=#=--=#=--=#=--=#=--=#=--=#=--=#

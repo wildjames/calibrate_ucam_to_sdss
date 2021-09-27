@@ -1,4 +1,5 @@
 import argparse
+import copy
 import json
 from os import mkdir
 from os.path import isdir, join
@@ -13,8 +14,6 @@ from astropy import coordinates as coord
 from astropy import time
 from astropy import units as u
 from astropy.stats import sigma_clipped_stats
-
-from calphot.getEclipseTimes import tcorrect
 from ruamel import yaml
 
 parser = argparse.ArgumentParser("YAML input method.")
@@ -42,6 +41,49 @@ comparison_aperture =       input_dict['comparison_aperture']
 comparison_mags_tablename = input_dict['comparison_mags_tablename']
 variables_fname =           input_dict['previous values']
 
+
+def tcorrect(tseries, star, observatory, type='B'):
+    """
+    Correct for light travel time.
+
+    Arguments:
+    ----------
+    tseries: hipercam.hlog.Tseries
+        Time series object
+
+    star: astropy.coordinate.SkyCoord
+        Location of star on Sky
+
+    observatory: string
+        Observatory name. See coord.EarthLocation.get_site_names() for list. If not in the list, assumed
+        to be "lat, lon", comma separated.
+
+    type: string (default=B)
+        Heliocentric (H) or Barcentric (B)
+
+    Returns
+    -------
+    tseries_corr : hipercam.hlog.Tseries
+        Time series object with corrected time axis
+    """
+    ts = copy.deepcopy(tseries)
+    try:
+        location = coord.EarthLocation.of_site(observatory)
+    except:
+        lat, lon = observatory.split(',')
+        print("  Attempting to get the earth location from latitude and longitude")
+        location = coord.EarthLocation.from_geodetic(lat=lat, lon=lon)
+
+    times = time.Time(tseries.t, format='mjd', scale='utc', location=location)
+
+    if type == 'B':
+        corr = times.light_travel_time(star, 'barycentric', )
+        corr = times.tdb + corr
+    else:
+        corr = times.light_travel_time(star, 'heliocentric')
+        corr = times.utc + corr
+    ts.t = corr.mjd
+    return ts
 
 def sdss_mag2flux(mag):
     '''Takes an SDSS magnitude, returns the corresponding flux in [mJy]'''
@@ -93,9 +135,9 @@ print(target_mags)
 # I need to compute this factor:
 # 10^[a({g_targ - r_targ} - {g_comp - r_comp})]
 # where a is the colour term, and g-r could be u-g for each
-# This factor will be close to constant across the lightcurve, so I'm 
-# calculating it based on the average magnitudes of the star. These 
-# will be sigma-clipped means! 
+# This factor will be close to constant across the lightcurve, so I'm
+# calculating it based on the average magnitudes of the star. These
+# will be sigma-clipped means!
 Ku = -0.4 * a_u * ((target_mags['u'] - target_mags['g']) - (comp_mags['u'] - comp_mags['g']))
 Kg = -0.4 * a_g * ((target_mags['g'] - target_mags['r']) - (comp_mags['g'] - comp_mags['r']))
 Kr = -0.4 * a_r * ((target_mags['g'] - target_mags['r']) - (comp_mags['g'] - comp_mags['r']))
@@ -116,7 +158,7 @@ comp_flx = {key: sdss_mag2flux(comp_mags[key]) for key in comp_mags.keys()}
 print("\n\nI calculated the following fluxes, in mJy: ")
 print(comp_flx)
 
-# In order to translate the GPS-stamped earth arrival times of the 
+# In order to translate the GPS-stamped earth arrival times of the
 # data into Barycentric MJD times, I need an astropy skycoord object.
 star_loc = coord.SkyCoord(
     target_coords,
@@ -166,9 +208,9 @@ for fname in fnames:
     target_lightcurves['r'] = (target_countcurves['r'] / comparison_countcurves['r']) * (Kr * comp_flx['r'])
     print("Done!\n")
 
-    # The flux is now sorted! But the time axis is out of whack. 
+    # The flux is now sorted! But the time axis is out of whack.
     print("Sorting out the time axis (correcting to BMJD, phase folding)...")
-    # Correct the MJD times recorded by the camera, 
+    # Correct the MJD times recorded by the camera,
     target_lightcurves = {key: tcorrect(curve, star_loc, obsname) for key, curve in target_lightcurves.items()}
 
     # Phase fold. I need to know what eclipse number this one is, first.
@@ -203,7 +245,7 @@ for fname in fnames:
             target_lightcurves[band].ye[slice_args],
             target_lightcurves[band].mask[slice_args]
         )
-        
+
         # Bad data has error = -1
         mask = np.where(target_lightcurves[band].ye != -1)
         target_lightcurves[band] = target_lightcurves[band][mask]
@@ -214,8 +256,8 @@ for fname in fnames:
     fig, axs = plt.subplots(3, sharex=True)
 
     axs[0].errorbar(
-        target_lightcurves['u'].t, target_lightcurves['u'].y, 
-        yerr=target_lightcurves['u'].ye, 
+        target_lightcurves['u'].t, target_lightcurves['u'].y,
+        yerr=target_lightcurves['u'].ye,
         color='blue', drawstyle='steps'
     )
     axs[0].axhline(sdss_mag2flux(target_mags['u']), color='black', label='Calculated target magnitude')
@@ -223,8 +265,8 @@ for fname in fnames:
     axs[0].axhline(clipped_mean_flux, color='magenta', label='Mean lightcurve')
 
     axs[1].errorbar(
-        target_lightcurves['g'].t, target_lightcurves['g'].y, 
-        yerr=target_lightcurves['g'].ye, 
+        target_lightcurves['g'].t, target_lightcurves['g'].y,
+        yerr=target_lightcurves['g'].ye,
         color='green', drawstyle='steps'
     )
     axs[1].axhline(sdss_mag2flux(target_mags['g']), color='black')
@@ -232,8 +274,8 @@ for fname in fnames:
     axs[1].axhline(clipped_mean_flux, color='magenta')
 
     axs[2].errorbar(
-        target_lightcurves['r'].t, target_lightcurves['r'].y, 
-        yerr=target_lightcurves['r'].ye, 
+        target_lightcurves['r'].t, target_lightcurves['r'].y,
+        yerr=target_lightcurves['r'].ye,
         color='red', drawstyle='steps'
     )
     axs[2].axhline(sdss_mag2flux(target_mags['r']), color='black')
@@ -243,7 +285,7 @@ for fname in fnames:
     axs[0].set_title("Flux calibrated, phase-folded lightcurves\n{}".format(fname))
     axs[2].set_xlabel("Phase")
     axs[1].set_ylabel("SDSS Flux, mJy")
-    
+
     axs[0].legend()
 
     date = time.Time(eclTime, format='mjd')

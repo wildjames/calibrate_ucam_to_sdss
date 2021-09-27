@@ -5,7 +5,7 @@ from os.path import abspath, join, split
 import hipercam as hcam
 import pandas as pd
 
-from calphot.constructReference import get_instrumental_mags
+from constructReference import get_instrumental_mags
 
 desc = '''
 Using the standard - like reduction, calculate the comparison star magnitudes of a logfile.
@@ -13,18 +13,18 @@ g_sdss = g_inst,noatmos - g_zp - a_g(g-r)
 '''
 
 
-parser = argparse.ArgumentParser(description=desc, prefix_chars='@')
+parser = argparse.ArgumentParser(description=desc)
 parser.add_argument("reduction")
-parser.add_argument("RA")
-parser.add_argument("DEC")
-parser.add_argument('@@oname', default="comparison_star_sdss_mags", required=False)
+# parser.add_argument("RA")
+# parser.add_argument("DEC")
+parser.add_argument('--oname', default="comparison_star_sdss_mags", required=False)
 
 args = parser.parse_args()
 
 print(args)
 
 fname = args.reduction
-target_coords = "{} {}".format(args.RA, args.DEC)
+target_coords = input("Please enter [RA DEC], space separated, of the target stars: ") # "{} {}".format(args.RA, args.DEC)
 oname = args.oname
 
 obsname = 'lasilla'
@@ -46,6 +46,9 @@ print(values_fname)
 # First, remember what we've found so far
 with open(values_fname, 'r') as f:
     variables = json.load(f)
+
+print("I'm using the following variables for colour correction:")
+print(variables)
 
 
 data = hcam.hlog.Hlog.rascii(fname)
