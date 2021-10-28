@@ -86,7 +86,7 @@ g_zp = variables['g_zp']
 r_zp = variables['{}_zp'.format(redband)]
 
 
-for ap_index in range(len(mags)):
+for ap_index in range(len(inst_mags)):
     u_inst = inst_mags['u'][ap_index]
     g_inst = inst_mags['g'][ap_index]
     r_inst = inst_mags[redband][ap_index]
@@ -154,7 +154,7 @@ for ap_index in range(len(mags)):
     sdss_mags[redband].append(r_sdss)
 
 sdss_df = pd.DataFrame()
-for ap_index in range(len(mags)):
+for ap_index in range(len(inst_mags)):
     row = {
         "aperture": str(ap_index+1),
 #       'u': sdss_mags['u'][ap_index],
