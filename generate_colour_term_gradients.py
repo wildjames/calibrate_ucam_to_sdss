@@ -9,10 +9,12 @@ import pysynphot as S
 from scipy.optimize import minimize
 from ucam_thruput import getref
 
+# White dwarf models
 generate_koester = True
-generate_MIST = False
+# Main sequence models
+generate_MIST = True
 
-telescope, instrument = 'ntt', 'ucam'
+telescope, instrument = 'gtc', 'hcam'
 stimtype = 'abmag'
 
 variables_fname = "FOUND_VALUES.json"
@@ -33,24 +35,37 @@ k_ext = {
     'sdss:r': 0.0,
     'sdss:i': 0.0,
     'sdss:z': 0.0,
+
     'ucam:ntt:u_s': 0.0,
     'ucam:ntt:g_s': 0.0,
     'ucam:ntt:r_s': 0.0,
     'ucam:ntt:i_s': 0.0,
     'ucam:ntt:z_s': 0.0,
+
+    'ucam:wht:u_s': 0.0,
+    'ucam:wht:g_s': 0.0,
+    'ucam:wht:r_s': 0.0,
+    'ucam:wht:i_s': 0.0,
+    'ucam:wht:z_s': 0.0,
+
+    'hcam:gtc:u_s': 0.0,
+    'hcam:gtc:g_s': 0.0,
+    'hcam:gtc:r_s': 0.0,
+    'hcam:gtc:i_s': 0.0,
+    'hcam:gtc:z_s': 0.0,
 }
 
 def get_phoenix_mags(teff, logg, ebv):
-    '''Folds a phoenix model through the SDSS lightpath, 
+    '''Folds a phoenix model through the SDSS lightpath,
     and the ULTRACAM lightpath. Returns all the abmags, as surface magnitudes.'''
     row = {
-        'teff': teff, 
+        'teff': teff,
         'logg':logg,
         'ebv': ebv,
     }
 
     filters = [
-        'u_s', 'g_s', 'r_s', 'i_s', 'z_s', 
+        'u_s', 'g_s', 'r_s', 'i_s', 'z_s',
         # 'u', 'g', 'r', 'i', 'z'
     ]
     sdss_filters = ['u', 'g', 'r', 'i', 'z']
@@ -175,7 +190,7 @@ if generate_koester:
         )
 
         # Get all the SDSS magnitudes
-        S.setref(comptable=None, graphtable=None)  # leave the telescope 
+        S.setref(comptable=None, graphtable=None)  # leave the telescope
         simulated_mags = {}
         for f in sdss_filters:
             bp = S.ObsBandpass("{},{}".format('sdss', f))
@@ -222,9 +237,9 @@ diagnostic = input("What colour should we use for a diagnostic (e.g. 'u-g'): ")
 
 def chisq(args):
     '''Uses this model to calculate chi squared:
-    
+
     g_sdss - g_inst = g_zp + a_g(g-r)_sdss
-    
+
     optimises for g_zp and a_g
     '''
     chisq = 0.0
@@ -275,13 +290,6 @@ ax.plot(xr, yr, color='blue', label='Fitted line, colour term: {:.3f}'.format(co
 
 ax.set_ylabel("SDSS ${}$ - {}/{} ${}_s$".format(targetband, telescope.upper(), instrument.upper(), targetband))
 ax.set_xlabel("SDSS ${}$".format(diagnostic))
-
-
-# SA 114 SDSS colour
-if diagnostic == 'g-r':
-    ax.axvline(1.120, color='magenta', label='SA 114 548')
-else:
-    ax.axvline(3.146, color='magenta', label='SA 114 548')
 
 
 ax.legend()

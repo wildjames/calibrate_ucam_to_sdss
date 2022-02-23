@@ -5,7 +5,7 @@ from time import sleep
 import hipercam as hcam
 import pandas as pd
 
-from calphot.constructReference import get_instrumental_mags
+from constructReference import get_instrumental_mags
 
 # Gather some data files
 mydir = split(abspath(__file__))[0]
@@ -22,10 +22,10 @@ with open(values_fname, 'r') as f:
 
 
 def get_smith_info(starname, tablename):
-    '''Gather the information I care about from the smith data table. 
+    '''Gather the information I care about from the smith data table.
     The smith star name can be finnicky, if this doesn't work, check how the star
     is formatted in the table.
-    
+
     Returns:
     --------
     gathered_mags, dict:
@@ -51,9 +51,9 @@ def get_smith_info(starname, tablename):
 
 
 def gather_standard_mags(fname, coords, obsname, k_ext, bands):
-    '''return the instrumental, above atmosphere, SDSS magnitudes. 
+    '''return the instrumental, above atmosphere, SDSS magnitudes.
     the passed list of bands tells me what order the CCDs are in.'''
-    data = hcam.hlog.Hlog.read(fname)
+    data = hcam.hlog.Hlog.rascii(fname)
     inst_mags = get_instrumental_mags(data, coords, obsname, k_ext)
     inst_mags = {band: inst_mags[str(i+1)][0] for i, band in enumerate(bands)}
     return inst_mags
@@ -64,15 +64,15 @@ if __name__ in "__main__":
     #=--=#=--= USER DEFINED STUFF =--=#=--=#
     #=--=#=--=#=--=#=--=#=--=#=--=#=--=#=--=#
     desc = '''
-    The standard star reduction MUST be done with large apertures to 
+    The standard star reduction MUST be done with large apertures to
     capture all the light from the star.
 
-    The Smith tables contain good, reliable magnitudes for the standards. 
+    The Smith tables contain good, reliable magnitudes for the standards.
     These can be retrieved by entering its name below, but check the format is correct first!
 
 
-    NOTE!!! This script assumes that the colour terms are all a 
-    function of g-r, EXCEPT the u band, which is assumed to be a 
+    NOTE!!! This script assumes that the colour terms are all a
+    function of g-r, EXCEPT the u band, which is assumed to be a
     function of u-g. IF YOU CHANGE THAT, CHANGE THIS SCRIPT!!!
     '''
     import argparse
@@ -89,11 +89,19 @@ if __name__ in "__main__":
     std_name = args.std_name
 
     # Observed bands in the above reduction.
-    bands = ['r', 'g', 'u']
+    bands = input("Please enter the filters, in order, separated by spaces: ").split(" ")
+    print(" -->> I have the bands: {}".format(bands))
     # Observing conditions
-    obsname = 'lasilla'
+    obsname = input("Please enter the observation site: ")
     # Atmospheric extinction, in CCD order (typically r,g,u)
     k_ext = [0.1129, 0.2020, 0.4868]
+    k_ext = []
+    for band in bands:
+        k_ext.append(float(input("Please enter the extinction coefficient for band {}: ".format(band))))
+
+    print(" -->> I have the extinction coefficients:")
+    for band, k in zip(bands, k_ext):
+        print("{:>5s}: {}".format(band, k))
 
     #=--=#=--=#=--=#=--=#=--=#=--=#=--=#=--=#
     #=--=#=--=#=--=#=--=#=--=#=--=#=--=#=--=#
@@ -122,6 +130,9 @@ if __name__ in "__main__":
         if 'u' in band:
             print("  using u-g")
             colour_term *= smith_mags['u'] - smith_mags['g']
+        elif 'i' in band:
+            print("  using g-i")
+            colour_term *= smith_mags['g'] - smith_mags['i']
         else:
             print("  using g-r")
             colour_term *= smith_mags['g'] - smith_mags['r']
