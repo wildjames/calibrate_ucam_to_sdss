@@ -9,7 +9,7 @@ import pysynphot as S
 from scipy.optimize import minimize
 from ucam_thruput import getref
 
-generate_koester = False
+generate_koester = True
 generate_MIST = False
 
 telescope, instrument = 'ntt', 'ucam'
@@ -39,9 +39,6 @@ k_ext = {
     'ucam:ntt:i_s': 0.0,
     'ucam:ntt:z_s': 0.0,
 }
-
-targetband = input("What band are we correcting? (ugriz)  ")
-diagnostic = input("What colour should we use for a diagnostic (e.g. 'u-g'): ")
 
 def get_phoenix_mags(teff, logg, ebv):
     '''Folds a phoenix model through the SDSS lightpath, 
@@ -110,6 +107,7 @@ if generate_MIST:
             mags['g-r'] = mags['sdss:g'] - mags['sdss:r']
             mags['r-i'] = mags['sdss:r'] - mags['sdss:i']
             mags['i-z'] = mags['sdss:i'] - mags['sdss:z']
+            mags['g-i'] = mags['sdss:g'] - mags['sdss:i']
 
             for band in ['u', 'g', 'r', 'i', 'z']:
                 mags["{0}-{0}_s".format(band)] = mags['{}:{}:{}_s'.format(instrument, telescope, band)] - mags['sdss:{}'.format(band)]
@@ -134,7 +132,7 @@ if generate_koester:
 
     # Lets store it all in a pandas dataframe.
     INFO = ['Teff', 'logg']
-    SDSS_COLOURS = ['u-g', 'g-r', 'r-i', 'i-z']
+    SDSS_COLOURS = ['u-g', 'g-r', 'r-i', 'i-z', 'g-i']
     CORRECTIONS = ["{}-{}".format(a,b) for a,b in zip(sdss_filters, cam_filters)]
 
     COLNAMES = INFO + SDSS_COLOURS + CORRECTIONS
@@ -194,6 +192,7 @@ if generate_koester:
             obs = S.Observation(sp, bp, force='taper')
             mag = obs.effstim("abmag")
             simulated_mags[f] = mag
+            row[f] = mag
 
         for colour in SDSS_COLOURS:
             f1, f2 = colour.split("-")
@@ -214,6 +213,12 @@ if generate_koester:
     koester_df.to_csv(os.path.join(mydir, "tables/koester_magnitudes_logg_{}.csv".format(logg)))
 else:
     koester_df = pd.read_csv(os.path.join(mydir, "tables/koester_magnitudes_logg_850.csv"))
+
+
+################ FITTING THE TRACKS ################
+
+targetband = input("What band are we correcting? (ugriz)  ")
+diagnostic = input("What colour should we use for a diagnostic (e.g. 'u-g'): ")
 
 def chisq(args):
     '''Uses this model to calculate chi squared:
